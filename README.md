@@ -58,6 +58,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## INSTRUCCIONES:
+## Instrucciónes
 
 para migrar y rellenar las tablas use "php artisan migrate:fresh --seed" una vez tenga creada la DB, este comando actualiza tablas si ya existían
