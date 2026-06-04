@@ -1,0 +1,25 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('preguntas', function (Blueprint $table) {
+            $table->id();
+            $table->string('enunciado', 1024);
+            $table->string('correcta', 1024);
+            $table->string('falsa1', 1024);
+            $table->string('falsa2', 1024);
+            $table->string('falsa3', 1024);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('preguntas');
+    }
+};
