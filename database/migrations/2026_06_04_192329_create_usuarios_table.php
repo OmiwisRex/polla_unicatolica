@@ -19,6 +19,8 @@ return new class extends Migration
             
             // Relación con permisos (por defecto 1, con cascade en update)
             $table->foreignId('permiso_id')->default(1)->constrained('permisos')->onUpdate('cascade');
+
+            $table->rememberToken();
         });
     }
 
