@@ -15,6 +15,7 @@ class Pregunta extends Model
         'correcta', 
         'falsa1', 
         'falsa2', 
-        'falsa3'
+        'falsa3',
+        'estado'
     ];
 }

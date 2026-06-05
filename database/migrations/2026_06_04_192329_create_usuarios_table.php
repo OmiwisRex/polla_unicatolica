@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
-            $table->string('cedula', 32)->unique(); // UNIQUE KEY
+            $table->string('cedula', 32)->unique();
             $table->string('nombre', 32);
             $table->string('clave', 128);
 

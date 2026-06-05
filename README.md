@@ -1,63 +1,71 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Polla Unicatólica
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+es una página web para que los trabajadores de la universidad Unicatólica en Cali - Colombia jueguen a la polla mundialista, del mundial de fútbol 2026, pero además de adivinar los marcadores, también habrá trivias de preguntas sobre la institución.
 
-## About Laravel
+## Requerimientos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Todos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- cualquier persona sin login puede ingresar a la página home y observar el estado del mundial, filtrando por etapas puede ver en la tabla los equipos enfrentados, fechas y resultados en goles.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- cualquier persona sin login puede ver la tabla de jugadores en la clasificación por puntos, viendo puntos totales de cada uno para adivinación de resultados, trivia y su sumatoria.
 
-## Learning Laravel
+### Jugador
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- en inicio cualquier persona puede crear un registro, usando su cédula como ID único, pero aún no tendrá permisos para nada ni se verá en la tabla de jugadores, al logearse así verá solo la información que le dice, por favor diríjase a X lugar para que el administrador reciba su dinero y le de ingreso.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- una vez el administrador le ha dado ingreso, podrá logearse y también cerrar sesión.
 
-## Laravel Sponsors
+- cuando un partido tenga los dos equipos enfrentados ya definidos y la fecha y hora de inicio del juego aún no ha pasado, el jugador puede ingresar su adivinación de cuántos goles hará cada equipo.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- cuando elija la adivinación de goles, podrá también responder una pregunta de trivia, esta se elige al azar de un banco, sin poder repetirse para el jugador, además la pregunta queda guardada en apuestas, por si se cierra el forms antes de contestar, la pregunta elegida queda a la espera.
 
-### Premium Partners
+- cuando se cargue la información de los partidos, podrá ver para cada uno cuántos puntos ha ganado tanto por adivinar ganador + marcador, como puntos de trivia.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- cuando se cargue la información de clasificación de jugadores, podrá ver resaltado su nombre en la tabla.
 
-## Contributing
+### Administrador
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- acceder a su cuenta vía login, se supone el registro se hará quemando datos directamente desde desarrollo.
 
-## Code of Conduct
+- dado que los partidos ya están quemados en la DB mediante seeds, el admin solo puede hacer update, nada de crear o eliminar, puede entonces actualizar a los dos equipos encontrados, la fecha_hora de juego y los goles hechos una vez el partido acabe.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- podrá hacer el CRUD de preguntas, para llenar el banco de preguntas (tabla).
 
-## Security Vulnerabilities
+- puede buscar jugadores por número de cédula y ver sus permisos, desde ahí puede ejecutar updates de sus nombres, claves (contraseña) y cambiar el permiso entre ninguno y jugador, este cambio a permiso de jugador lo haría cuando reciba el dinero en mano.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Vistas
+
+- clasificación de jugadores, una tabla con el listado de jugadores ordenados por total de puntos, tiene 5 columnas: puesto (siendo relevantes arriba el 1, 2, 3), nombre del jugador, puntos por apuestas, puntos por preguntas, puntos totales (suma, lo que da el ranking). además si esta vista se ve con un usuario logeado, resaltará la fila asociada a dicho usuario según el ID primario interno.
+
+- partidos, una tabla que muestra los partidos como registros, consta de 5 columnas: la etapa, equipo A, equipo B (los dos muestran un ícono de bandera grande y abajo de este el nombre del equipo), la fecha y hora de juego, los goles hechos "g_a - g_b". en caso de no haber equipos, fechas, goles, se especifica con un texto acorde. se ordena la tabla según la fecha y hora, siendo arriba la más reciente. esta vista posee un selector arriba a la izquierda para filtrar por etapa y también posee un texto iformativo arriba a la derecha, que dice el porcentaje de avance del mundial (partidos con goles definidos / total).
+
+- partidos admin, cuando se loguea el administrador, ve la misma tabla de partidos pero, equipo A, equipo B, fecha_hora, resultado, son botónes para edición update, al pulsarlos sale ventana emergente con un forms que permite hacer el update al campo correspondiente y luego se refleja en la tabla. además en lugar de mostrar el porcentaje de avance, muestra es el número de partidos que deben ser editados para poner sus marcadores, aquellos que no tienen goles definidos pero la fecha_hora ya pasó.
+
+- partidos jugador, cuando se loguea el jugador, ve la misma tabla de partidos pero, se agregan dos columnas: adivinación de marcador "g_a - g_b", y puntos del partido donde muestra (a + b = c) siendo a los puntos de adivinación y b los de responder la pregunta. los puntos dependerán de si en efecto hay o no adivinación y pregunta resuelta. en caso de no haberse hecho la adivinación, si esta puede hacerse (los dos equipos están definidos y la fecha_hora no ha pasado) aparecerá un botón que dice Adivinar, al pulsarlo una ventana emergente con un forms permite ingresar los dos marcadores (goles de cada equipo) y responder la pregunta seleccionada al azar del bando y que no se ha hecho antes al jugador. esta elección se puede hacer una sola vez, no tiene update la adivinación.
+
+## Ejemplos
+
+- en la carpeta sketchs/ hay dos ejemplos, uno (polla_ejemplo_is) es un frontend con datos quemados, hecho con IA para darse una idea de cómo luciría el software, es solo polla mundialista, sin las trivias, además aún no es exactamente como debe lucir el software real, solo un aproximado.
+- en la carpeta sketchs/ hay dos ejemplos, otro (preguntas_crud) es un CRUD sencillo, sin login, para ir llenando las preguntas mientras se desarrolla el software, pero da una idea de cómo debe quedar ese apartado.
 
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## Instrucciónes
+## Instalación
 
-para migrar y rellenar las tablas use "php artisan migrate:fresh --seed" una vez tenga creada la DB, este comando actualiza tablas si ya existían
+para armar el proyecto luego de clonarlo del repositorio:
+
+1. composer install
+2. copy .env.example .env
+3. php artisan key:generate
+4. configurar DB en .env
+5. php artisan migrate:fresh --seed
+6. npm install
+7. npm run dev
+8. php artisan config:clear
+   php artisan route:clear
+   php artisan view:clear
+   php artisan cache:clear
+9. php artisan serve

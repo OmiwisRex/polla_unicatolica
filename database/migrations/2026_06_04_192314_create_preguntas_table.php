@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('falsa1', 1024);
             $table->string('falsa2', 1024);
             $table->string('falsa3', 1024);
+            $table->tinyInteger('estado')->default(1);
         });
     }
 
