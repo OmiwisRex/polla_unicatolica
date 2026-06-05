@@ -1,0 +1,97 @@
+﻿.team-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.team-flag {
+  font-size: 24px;
+}
+
+.team-name {
+  display: block;
+  font-size: 15px;
+  color: #e8e8e8;
+}
+
+.match-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status {
+  color: #c0c0c0;
+  font-size: 14px;
+}
+
+.score-pill {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+  font-weight: bold;
+}
+
+.metric-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  color: #d4af37;
+  font-weight: bold;
+}
+
+.btn-small {
+  font-size: 11px;
+  padding: 7px 10px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.modal-box {
+  position: relative;
+  background: rgba(30, 30, 30, 0.98);
+  border: 1px solid #d4af37;
+  border-radius: 12px;
+  padding: 28px;
+  width: min(520px, calc(100% - 40px));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  z-index: 60;
+}
+
+.modal-box h2 {
+  margin-bottom: 18px;
+  color: #d4af37;
+}
+
+.modal-box .group-form input,
+.modal-box .group-form select {
+  width: 100%;
+  background: #1f1f1f;
+  border: 2px solid #5c471c;
+  border-radius: 6px;
+  padding: 12px;
+  color: #e8e8e8;
+}
+
+.modal-box .actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

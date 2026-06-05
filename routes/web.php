@@ -3,6 +3,7 @@
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PartidoController;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,12 +13,19 @@ use Illuminate\Support\Facades\Route;
 */
 // Home / Clasificación de jugadores (views/index.blade.php)
 Route::get('/', function () {
-    return view('index');
+    $usuarios = Usuario::selectRaw('usuarios.*, pts_apuestas + pts_preguntas AS total_pts')
+        ->orderByDesc('total_pts')
+        ->orderByDesc('pts_apuestas')
+        ->orderByDesc('pts_preguntas')
+        ->get();
+
+    return view('index', [
+        'usuarios' => $usuarios,
+    ]);
 })->name('index');
 
 // Vista pública de partidos (views/partidos/index.blade.php)
 Route::get('/partidos', [PartidoController::class, 'indexPublico'])->name('partidos.index');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -52,9 +60,11 @@ Route::middleware('auth')->group(function () {
 
     // Vista de partidos para el Jugador (views/partidos/jugador.blade.php)
     Route::get('/partidos-jugador', [PartidoController::class, 'indexJugador'])->name('partidos.jugador');
+    Route::post('/partidos/{partido}/apostar', [PartidoController::class, 'apostar'])->name('partidos.apostar');
 
     // Vista de partidos para el Administrador (views/partidos/admin.blade.php)
     Route::get('/partidos-admin', [PartidoController::class, 'indexAdmin'])->name('partidos.admin');
+    Route::patch('/partidos/{partido}', [PartidoController::class, 'update'])->name('partidos.update');
 
     // CRUD de Preguntas (Solo Admin deberia entrar, views/preguntas/...)
     // Excluimos 'show' porque tus vistas son index, create y edit
