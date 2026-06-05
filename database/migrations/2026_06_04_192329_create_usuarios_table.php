@@ -14,8 +14,8 @@ return new class extends Migration
             $table->string('nombre', 32);
             $table->string('clave', 128);
 
-            $table->integer('pts_apuestas');
-            $table->integer('pts_preguntas');
+            $table->integer('pts_apuestas')->default(0);
+            $table->integer('pts_preguntas')->default(0);
             
             // Relación con permisos (por defecto 1, con cascade en update)
             $table->foreignId('permiso_id')->default(1)->constrained('permisos')->onUpdate('cascade');

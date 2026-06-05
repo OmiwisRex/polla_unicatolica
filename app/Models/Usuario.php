@@ -34,4 +34,9 @@ class Usuario extends Authenticatable
     {
         return $this->belongsTo(Permiso::class, 'permiso_id');
     }
+
+    public function getAuthPassword()
+    {
+        return $this->clave;
+    }
 }

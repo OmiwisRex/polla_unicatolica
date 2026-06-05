@@ -83,6 +83,7 @@ todas las vistas incluyen un header, con el título de la página a la izquierda
 ## Ejemplos
 
 - en la carpeta sketchs/ hay dos ejemplos, uno (polla_ejemplo_is) es un frontend con datos quemados, hecho con IA para darse una idea de cómo luciría el software, es solo polla mundialista, sin las trivias, además aún no es exactamente como debe lucir el software real, solo un aproximado.
+
 - en la carpeta sketchs/ hay dos ejemplos, otro (preguntas_crud) es un CRUD sencillo, sin login, para ir llenando las preguntas mientras se desarrolla el software, pero da una idea de cómo debe quedar ese apartado.
 
 ## License
