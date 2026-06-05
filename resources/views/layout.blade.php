@@ -15,6 +15,7 @@
             </div>
 
             <div class="controls">
+                <a href="{{ route('index') }}" class="btn btn-secondary">Clasificación</a>
                 <a href="{{ route('partidos.index') }}" class="btn btn-secondary">Partidos</a>
                 @auth
                     @if(auth()->user()->permiso_id === 3)

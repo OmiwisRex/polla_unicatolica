@@ -3,7 +3,7 @@
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PartidoController;
-use App\Models\Usuario;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,17 +12,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 // Home / Clasificación de jugadores (views/index.blade.php)
-Route::get('/', function () {
-    $usuarios = Usuario::selectRaw('usuarios.*, pts_apuestas + pts_preguntas AS total_pts')
-        ->orderByDesc('total_pts')
-        ->orderByDesc('pts_apuestas')
-        ->orderByDesc('pts_preguntas')
-        ->get();
-
-    return view('index', [
-        'usuarios' => $usuarios,
-    ]);
-})->name('index');
+Route::get('/', [UsuarioController::class, 'index'])->name('index');
 
 // Vista pública de partidos (views/partidos/index.blade.php)
 Route::get('/partidos', [PartidoController::class, 'indexPublico'])->name('partidos.index');

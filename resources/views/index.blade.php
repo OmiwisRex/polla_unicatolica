@@ -43,19 +43,5 @@
             @endforelse
         </tbody>
     </table>
-
-    <div class="actions">
-        @guest
-            <a href="{{ route('login') }}" class="btn btn-primary btn-nav">Iniciar sesión</a>
-        @else
-            @if(auth()->user()->permiso_id === 3)
-                <a href="{{ route('partidos.admin') }}" class="btn btn-primary btn-nav">Ir a Partidos Admin</a>
-            @elseif(auth()->user()->permiso_id === 2)
-                <a href="{{ route('partidos.jugador') }}" class="btn btn-primary btn-nav">Ir a Mis Partidos</a>
-            @else
-                <a href="{{ route('pagar') }}" class="btn btn-primary btn-nav">Pagar para activar</a>
-            @endif
-        @endguest
-    </div>
 </div>
 @endsection
