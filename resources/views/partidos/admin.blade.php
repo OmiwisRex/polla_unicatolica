@@ -65,7 +65,8 @@
                     </td>
                     <td>
                         @if($partido->fecha_hora)
-                            {{ $partido->fecha_hora->format('d/m/Y H:i') }}
+                            <div>{{ $partido->fecha_hora->format('d/m/Y') }}</div>
+                            <div class="sub-text">{{ $partido->fecha_hora->format('h:i A') }}</div>
                         @else
                             <span class="status">Por definir</span>
                         @endif

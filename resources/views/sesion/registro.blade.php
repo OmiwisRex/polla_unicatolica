@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <div class="page-title">Registro de usuario</div>
+    <div class="page-title">Registro de jugador</div>
 
     @if($errors->any())
         <div class="validation-errors">
@@ -42,8 +42,7 @@
             </div>
 
             <div class="actions">
-                <button type="submit" class="btn btn-primary">Registrar</button>
-                <a href="{{ route('login') }}" class="btn btn-secondary">Ya tengo cuenta</a>
+                <button type="submit" class="btn btn-primary">Registrarse</button>
             </div>
         </form>
     </div>

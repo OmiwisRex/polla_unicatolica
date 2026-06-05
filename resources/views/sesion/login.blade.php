@@ -33,7 +33,6 @@
 
             <div class="actions">
                 <button type="submit" class="btn btn-primary">Ingresar</button>
-                <a href="{{ route('registro') }}" class="btn btn-secondary">Crear cuenta</a>
             </div>
         </form>
     </div>

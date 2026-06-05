@@ -16,13 +16,10 @@
 
             <div class="controls">
                 <a href="{{ route('index') }}" class="btn btn-secondary">Clasificación</a>
-                <a href="{{ route('partidos.index') }}" class="btn btn-secondary">Partidos</a>
+                <a href="{{ auth()->check() && auth()->user()->permiso_id === 2 ? route('partidos.jugador') : route('partidos.index') }}" class="btn btn-secondary">Partidos</a>
                 @auth
                     @if(auth()->user()->permiso_id === 3)
                         <a href="{{ route('preguntas.index') }}" class="btn btn-secondary">Preguntas</a>
-                    @endif
-                    @if(auth()->user()->permiso_id === 2)
-                        <a href="{{ route('partidos.jugador') }}" class="btn btn-secondary">Mis Partidos</a>
                     @endif
                     @if(auth()->user()->permiso_id === 1)
                         <a href="{{ route('pagar') }}" class="btn btn-secondary">Pagar</a>

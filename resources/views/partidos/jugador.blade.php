@@ -35,6 +35,7 @@
                 <th>Equipo A</th>
                 <th>Equipo B</th>
                 <th>Fecha y hora</th>
+                <th>Goles</th>
                 <th>Adivinación</th>
                 <th>Puntos</th>
             </tr>
@@ -61,18 +62,26 @@
                     </td>
                     <td>
                         @if($partido->fecha_hora)
-                            {{ $partido->fecha_hora->format('d/m/Y H:i') }}
+                            <div>{{ $partido->fecha_hora->format('d/m/Y') }}</div>
+                            <div class="sub-text">{{ $partido->fecha_hora->format('h:i A') }}</div>
                         @else
                             <span class="status">Por definir</span>
                         @endif
                     </td>
                     <td>
+                        @if($partido->goles_a !== null && $partido->goles_b !== null)
+                            <span class="score-pill">{{ $partido->goles_a }} - {{ $partido->goles_b }}</span>
+                        @else
+                            <span class="status">Pendiente</span>
+                        @endif
+                    </td>
+                    <td>
                         @if($apuesta)
                             <span class="score-pill">{{ $apuesta->goles_a }} - {{ $apuesta->goles_b }}</span>
-                        @elseif($puedeApostar)
-                            <button type="button" class="btn btn-primary btn-small" data-partido-id="{{ $partido->id }}" onclick="openApuestaModal(this.dataset.partidoId)">Adivinar</button>
+                        @elseif($partido->fecha_hora && $partido->fecha_hora->isPast())
+                            <span class="status">Vencida</span>
                         @else
-                            <span class="status">No disponible</span>
+                            <span class="status">Esperando</span>
                         @endif
                     </td>
                     <td>
@@ -83,7 +92,7 @@
                             @endphp
                             <span>{{ $apuestaPts }} + {{ $preguntaPts }} = {{ $apuestaPts + $preguntaPts }}</span>
                         @else
-                            <span class="status">No apostado</span>
+                            <span>0</span>
                         @endif
                     </td>
                 </tr>

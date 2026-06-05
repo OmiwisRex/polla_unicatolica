@@ -10,6 +10,7 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios = Usuario::selectRaw('usuarios.*, pts_apuestas + pts_preguntas AS total_pts')
+            ->where('permiso_id', 2)
             ->orderByDesc('total_pts')
             ->orderByDesc('pts_apuestas')
             ->orderByDesc('pts_preguntas')
