@@ -15,6 +15,7 @@ class Apuesta extends Model
         'pregunta_id', 
         'goles_a', 
         'goles_b', 
+        'ganador',
         'pts_pregunta',
         'pts_apuesta'
     ];

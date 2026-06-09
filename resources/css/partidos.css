@@ -115,6 +115,8 @@ select:focus {
   border-radius: 12px;
   padding: 28px;
   width: min(520px, calc(100% - 40px));
+  max-height: min(90vh, 700px);
+  overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
   z-index: 60;
 }
@@ -122,6 +124,12 @@ select:focus {
 .modal-box h2 {
   margin-bottom: 18px;
   color: #d4af37;
+}
+
+.modal-box .group-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #e8e8e8;
 }
 
 .modal-box .group-form input,
@@ -132,6 +140,40 @@ select:focus {
   border-radius: 6px;
   padding: 12px;
   color: #e8e8e8;
+}
+
+.options-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.radio-option label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #5c471c;
+  border-radius: 10px;
+  background: #111111;
+  color: #e8e8e8;
+  cursor: pointer;
+}
+
+.radio-option input {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  transform: scale(1) !important;
+  vertical-align: middle;
+  cursor: pointer;
+  margin: 0;
+}
+
+.question-text {
+  color: #e8e8e8;
+  margin-top: 8px;
 }
 
 .modal-box .actions {

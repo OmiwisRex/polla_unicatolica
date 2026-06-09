@@ -21,6 +21,7 @@ return new class extends Migration
             // Predicciones del usuario (todas opcionales/configurables)
             $table->tinyInteger('goles_a')->nullable();
             $table->tinyInteger('goles_b')->nullable();
+            $table->tinyInteger('ganador')->nullable();
             $table->tinyInteger('pts_pregunta')->nullable();
             $table->tinyInteger('pts_apuesta')->nullable();
         });

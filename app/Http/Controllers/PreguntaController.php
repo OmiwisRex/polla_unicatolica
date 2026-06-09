@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pregunta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PreguntaController extends Controller
 {
@@ -20,6 +21,8 @@ class PreguntaController extends Controller
 
     public function store(Request $request)
     {
+        abort_if(Auth::user()->permiso_id !== 3, 403);
+
         $request->validate([
             'enunciado' => 'required|string|max:1024',
             'correcta'  => 'required|string|max:1024',
@@ -41,6 +44,8 @@ class PreguntaController extends Controller
 
     public function update(Request $request, $id)
     {
+        abort_if(Auth::user()->permiso_id !== 3, 403);
+
         $request->validate([
             'enunciado' => 'required|string|max:1024',
             'correcta'  => 'required|string|max:1024',
@@ -57,6 +62,8 @@ class PreguntaController extends Controller
 
     public function destroy($id)
     {
+        abort_if(Auth::user()->permiso_id !== 3, 403);
+
         $pregunta = Pregunta::findOrFail($id);
         $pregunta->update([
             'estado' => 2

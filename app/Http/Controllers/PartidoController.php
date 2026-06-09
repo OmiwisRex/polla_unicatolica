@@ -193,10 +193,12 @@ class PartidoController extends Controller
             }
         }
 
-        $apuesta->load('pregunta');
+        $apuesta->load(['pregunta', 'partido.equipoA', 'partido.equipoB']);
 
         return response()->json([
             'apuesta_id' => $apuesta->id,
+            'equipo_a' => $partido->equipoA?->nombre ?? 'Equipo A',
+            'equipo_b' => $partido->equipoB?->nombre ?? 'Equipo B',
             'pregunta' => [
                 'enunciado' => $apuesta->pregunta->enunciado,
                 'correcta' => $apuesta->pregunta->correcta,
@@ -217,6 +219,7 @@ class PartidoController extends Controller
         $request->validate([
             'goles_a' => 'required|integer|min:0|max:30',
             'goles_b' => 'required|integer|min:0|max:30',
+            'ganador' => 'required|in:0,1,2',
             'respuesta' => 'required|string|max:1024',
         ]);
 
@@ -230,9 +233,15 @@ class PartidoController extends Controller
             return back()->with('error', 'Ya tienes una adivinación registrada para este partido.');
         }
 
+        $apuesta->load('pregunta');
+
+        $ptsPregunta = $request->respuesta === $apuesta->pregunta->correcta ? 2 : 0;
+
         $apuesta->update([
             'goles_a' => $request->goles_a,
             'goles_b' => $request->goles_b,
+            'ganador' => (int) $request->ganador,
+            'pts_pregunta' => $ptsPregunta,
         ]);
 
         return back()->with('success', 'Tu adivinación fue registrada.');

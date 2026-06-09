@@ -131,12 +131,21 @@
             <input id="apuesta_id" name="apuesta_id" type="hidden">
 
             <div class="group-form">
-                <label for="goles_a">Goles Equipo A</label>
+                <label for="ganador">Resultado</label>
+                <select id="ganador" name="ganador" required>
+                    <option value="0" id="ganador_a_option">Equipo A</option>
+                    <option value="1" id="ganador_b_option">Equipo B</option>
+                    <option value="2">Empate</option>
+                </select>
+            </div>
+
+            <div class="group-form">
+                <label for="goles_a"><span id="goles_a_label">Goles Equipo A</span></label>
                 <input id="goles_a" name="goles_a" type="number" min="0" max="30" required>
             </div>
 
             <div class="group-form">
-                <label for="goles_b">Goles Equipo B</label>
+                <label for="goles_b"><span id="goles_b_label">Goles Equipo B</span></label>
                 <input id="goles_b" name="goles_b" type="number" min="0" max="30" required>
             </div>
 
@@ -184,6 +193,10 @@
             document.getElementById('apuesta_id').value = data.apuesta_id ?? '';
             document.getElementById('goles_a').value = '';
             document.getElementById('goles_b').value = '';
+            document.getElementById('ganador_a_option').textContent = data.equipo_a;
+            document.getElementById('ganador_b_option').textContent = data.equipo_b;
+            document.getElementById('goles_a_label').textContent = 'Goles ' + data.equipo_a;
+            document.getElementById('goles_b_label').textContent = 'Goles ' + data.equipo_b;
 
             const preguntaBox = document.getElementById('pregunta-box');
             const preguntaEnunciado = document.getElementById('pregunta-enunciado');

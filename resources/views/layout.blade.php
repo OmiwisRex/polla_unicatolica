@@ -21,6 +21,7 @@
                 @auth
                     @if(auth()->user()->permiso_id === 3)
                         <a href="{{ route('preguntas.index') }}" class="btn btn-secondary">Preguntas</a>
+                        <a href="{{ route('usuarios.search') }}" class="btn btn-secondary">Jugadores</a>
                     @endif
                     @if(auth()->user()->permiso_id === 1)
                         <a href="{{ route('pagar') }}" class="btn btn-secondary">Pagar</a>

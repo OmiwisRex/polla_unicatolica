@@ -57,7 +57,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/partidos-admin', [PartidoController::class, 'indexAdmin'])->name('partidos.admin');
     Route::patch('/partidos/{partido}', [PartidoController::class, 'update'])->name('partidos.update');
 
-    // CRUD de Preguntas (Solo Admin deberia entrar, views/preguntas/...)
+    // CRUD de Preguntas (Solo Admin deberia entrar, views/preguntas/...) 
     // Excluimos 'show' porque tus vistas son index, create y edit
     Route::resource('preguntas', PreguntaController::class)->except(['show']);
+
+    // Administración de usuarios (Solo Admin)
+    Route::match(['get', 'post'], '/usuarios/buscar', [UsuarioController::class, 'search'])->name('usuarios.search');
+    Route::get('/usuarios/{usuario}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
+    Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->name('usuarios.update');
 });
