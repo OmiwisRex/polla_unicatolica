@@ -48,6 +48,51 @@
   padding: 7px 10px;
 }
 
+/* Expandir columna nombre en clasificación */
+.clasificacion-table .nombre-column {
+  width: 40%;
+  word-wrap: break-word;
+}
+
+/* Mejorar CSS del selector de etapa */
+select {
+  background-color: #1f1f1f;
+  color: #e8e8e8;
+  border: 2px solid #5c471c;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+select option {
+  background-color: #1f1f1f;
+  color: #8a8a8a;
+  padding: 8px;
+}
+
+select option:checked {
+  background: linear-gradient(#5c471c, #5c471c);
+  color: #d4af37;
+}
+
+select:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+}
+
+/* Mejorar CSS de clasificación para jugador actual */
+.usuario-actual {
+  background-color: #4a4a2a !important;
+  font-weight: 600 !important;
+}
+
+.usuario-actual td {
+  color: #d4af37 !important;
+  font-weight: bold !important;
+}
+
 .modal {
   position: fixed;
   inset: 0;

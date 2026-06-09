@@ -11,12 +11,12 @@
         <div class="header-content">
             <div>
                 <a href="{{ route('index') }}" class="logo">Polla Unicatólica</a>
-                <div class="logo-subtitle">Polla Mundial 2026 + Trivia</div>
+                <div class="logo-subtitle">Polla Mundial 2026 + Trivia Institucional</div>
             </div>
 
             <div class="controls">
                 <a href="{{ route('index') }}" class="btn btn-secondary">Clasificación</a>
-                <a href="{{ auth()->check() && auth()->user()->permiso_id === 2 ? route('partidos.jugador') : route('partidos.index') }}" class="btn btn-secondary">Partidos</a>
+                <a href="{{ auth()->check() && auth()->user()->permiso_id === 2 ? route('partidos.jugador') : (auth()->check() && auth()->user()->permiso_id === 3 ? route('partidos.admin') : route('partidos.index')) }}" class="btn btn-secondary">Partidos</a>
                 @auth
                     @if(auth()->user()->permiso_id === 3)
                         <a href="{{ route('preguntas.index') }}" class="btn btn-secondary">Preguntas</a>
@@ -32,7 +32,7 @@
                     <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
                     <a href="{{ route('registro') }}" class="btn btn-secondary">Registro</a>
                 @else
-                    <span class="tag">Hola, {{ auth()->user()->nombre }}</span>
+                    <span class="tag">{{ auth()->user()->nombre }}</span><br>
                     <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                         @csrf
                         <button type="submit" class="btn btn-primary">Logout</button>

@@ -68,7 +68,7 @@ function puede_apostarse($partido) {
         return false; // Equipos aún no definidos
     }
     if ($partido['goles1_apostado'] !== null) {
-        return false; // Ya hay una apuesta
+        return false; // Ya hay una adivinación
     }
     if (partidos_pasado($partido['fecha'], $partido['hora'])) {
         return false; // Ya pasó la fecha
@@ -90,16 +90,16 @@ function puede_apostarse($partido) {
         <div class="header-content">
             <div>
                 <div class="logo">🏆 POLLA MUNDIAL 2026</div>
-                <div class="logo-subtitle">Sistema de Apuestas Oficial</div>
+                <div class="logo-subtitle">sistema de adivinación</div>
             </div>
             <div style="font-size: 18px; color: #d4af37;">⚽</div>
         </div>
     </header>
 
     <div class="container">
-        <h1 class="page-title">Realizar Apuestas</h1>
+        <h1 class="page-title">Realizar Adivinaciónes</h1>
 
-        <div class="controls">
+        <div class="controls controlmax">
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" onchange="location.href='juego.php?etapa=' + this.value;">
                 <option value="grupos" <?= $etapa_filtro === 'grupos' ? 'selected' : '' ?>>Grupos</option>
@@ -121,7 +121,7 @@ function puede_apostarse($partido) {
                         <th>Etapa</th>
                         <th>Equipos</th>
                         <th>Fecha y Hora</th>
-                        <th>Tu Apuesta</th>
+                        <th>Tu Adivinación</th>
                         <th>Resultado</th>
                         <th>Acción</th>
                     </tr>
@@ -155,7 +155,7 @@ function puede_apostarse($partido) {
                                         <?= $partido['goles1_apostado'] ?> - <?= $partido['goles2_apostado'] ?>
                                     </div>
                                 <?php else: ?>
-                                    <span style="color: #888;">Sin apuesta</span>
+                                    <span style="color: #888;">Sin adivinación</span>
                                 <?php endif; ?>
                             </td>
                             <td>

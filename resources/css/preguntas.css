@@ -74,6 +74,10 @@ header {
   border-radius: 6px;
   border-left: 3px solid #8b4513;
 }
+.controlmax {
+  justify-content: space-between;
+  width: 100%;
+}
 
 .controls span {
   color: #d4af37;

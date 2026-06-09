@@ -44,7 +44,7 @@ foreach ($jugadores as $index => $jugador) {
         <div class="header-content">
             <div>
                 <div class="logo">🏆 POLLA MUNDIAL 2026</div>
-                <div class="logo-subtitle">Sistema de Apuestas Oficial</div>
+                <div class="logo-subtitle">sistema de adivinación</div>
             </div>
             <div style="font-size: 18px; color: #d4af37;">⚽</div>
         </div>

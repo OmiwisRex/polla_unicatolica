@@ -1,7 +1,7 @@
 # Tareas
 
-- en la vista de clasificación, hacer que la columna de nombre se expanda cubriendo más espacio de la tabla (no funcionó agregar un style a la vista).
+1. en views/partidos/admin el botón de Editar, con su forms emergente, NO permitirá editar goles, solo equipos en juego y fecha. en cambio, habrá otro botón para editar con forms emergente, exclusivamente los goles a y b, este botón aparecerá en la tabla para cada registro, en la columna Resultado, en lugar del texto "Pediente", solamente aparecerá dicho botón cuando haya definidos dos equipos y fecha, y la fecha ya haya quedado en el pasado.
 
-- en partidos generales, el avance porcentual de partidos con resultado, no es de los filtrados, sino de todos los registros de partidos en DB.
+2. en views/partidos/jugador, cuando en la columna Adivinación haya un partido que se pueda adivinar (tenga los dos equipos definidos y la fecha, y la fecha aún no haya transcurrido), aparecerá un botón en lugar de "Esperando" y con él emergerá un forms para agregar los goles. Nota: ya está programada la apuesta modal, solo que no está apareciendo, y además hay que verificar un par de cosas: 1 que en el momento que se pulsa, se genere un registro en la tabla apuestas, eligiendo una pregunta al azar y no puede ser repetida para otra apuesta del mismo usuario, esto por si se cierra el sistema antes de contestar, la pregunta no cambie al momento de hacer un reintento. 2 la pregunta debe entonces aparecer en el modal, abajo de la selección de goles, donde la respuesta correcta y las tres falsas se barajen al azar. será obligatorio contestarla y colocar goles para enviar la respuesta. No hay botón de cancelar el modal.
 
-etc...
+3. si no existen usuarios en la tabla de la DB, el primero en ser registrado tendrá automáticamente permisos administrativos.

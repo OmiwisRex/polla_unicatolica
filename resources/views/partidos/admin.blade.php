@@ -10,7 +10,7 @@
         <div class="alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="controls">
+    <div class="controls controlmax">
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.admin') }}">
@@ -33,6 +33,7 @@
                 <th>Equipo B</th>
                 <th>Fecha y hora</th>
                 <th>Resultado</th>
+                <th>Acciónes</th>
             </tr>
         </thead>
         <tbody>
@@ -44,18 +45,6 @@
                             <span class="team-flag">{{ $partido->equipoA?->bandera ?? '❓' }}</span>
                             <span class="team-name">{{ $partido->equipoA?->nombre ?? 'Por definir' }}</span>
                         </div>
-                        <button type="button" class="btn btn-secondary btn-small" 
-                            data-partido="{{ json_encode([
-                                'id' => $partido->id,
-                                'equipo_a_id' => $partido->equipo_a_id,
-                                'equipo_b_id' => $partido->equipo_b_id,
-                                'fecha_hora' => $partido->fecha_hora?->format('Y-m-d\TH:i'),
-                                'goles_a' => $partido->goles_a,
-                                'goles_b' => $partido->goles_b,
-                            ]) }}" 
-                            onclick="openPartidoModal(JSON.parse(this.dataset.partido))">
-                            Editar
-                        </button>
                     </td>
                     <td>
                         <div class="team-box">
@@ -77,6 +66,20 @@
                         @else
                             <span class="status">Pendiente</span>
                         @endif
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary btn-small" 
+                            data-partido="{{ json_encode([
+                                'id' => $partido->id,
+                                'equipo_a_id' => $partido->equipo_a_id,
+                                'equipo_b_id' => $partido->equipo_b_id,
+                                'fecha_hora' => $partido->fecha_hora?->format('Y-m-d\TH:i'),
+                                'goles_a' => $partido->goles_a,
+                                'goles_b' => $partido->goles_b,
+                            ]) }}"
+                            onclick="openPartidoModal(JSON.parse(this.dataset.partido))">
+                            Editar
+                        </button>
                     </td>
                 </tr>
             @empty
@@ -144,8 +147,8 @@
         window.location.href = this.dataset.route + '?etapa=' + this.value;
     });
 
-    function openPartidoModal(partidoJson) {
-        const partido = JSON.parse(partidoJson);
+    function openPartidoModal(partido) {
+        const form = document.getElementById('partido-edit-form');
         form.action = '/partidos/' + partido.id;
         document.getElementById('equipo_a_id').value = partido.equipo_a_id || '';
         document.getElementById('equipo_b_id').value = partido.equipo_b_id || '';

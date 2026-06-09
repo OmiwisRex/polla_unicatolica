@@ -6,12 +6,12 @@
 <div class="container">
     <div class="page-title">Clasificación de Jugadores</div>
 
-    <table>
+    <table class="clasificacion-table">
         <thead>
             <tr>
                 <th>Puesto</th>
-                <th style="width: 35%;">Nombre</th>
-                <th>Puntos apuestas</th>
+                <th class="nombre-column">Nombre</th>
+                <th>Puntos adivinaciónes</th>
                 <th>Puntos preguntas</th>
                 <th>Total</th>
             </tr>
@@ -22,7 +22,7 @@
                     $puesto = $index + 1;
                     $esActual = auth()->check() && auth()->user()->id === $usuario->id;
                 @endphp
-                <tr @if($esActual) style="background-color: #eef7ff; font-weight: 600;" @endif>
+                <tr @if($esActual) class="usuario-actual" @endif>
                     <td>{{ $puesto }}</td>
                     <td>
                         <strong>{{ $usuario->nombre }}</strong>

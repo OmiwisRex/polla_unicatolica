@@ -60,10 +60,19 @@ class AuthController extends Controller
     public function registro(Request $request)
     {
         // 1. Validamos los requerimientos técnicos del formulario
+        // Validar nombre solo con letras, acentos españoles, números y espacios
         $request->validate([
             'cedula' => 'required|string|max:32|unique:usuarios,cedula',
-            'nombre' => 'required|string|max:32',
+            'nombre' => [
+                'required',
+                'string',
+                'max:32',
+                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
+            ],
             'clave' => 'required|string|min:6|confirmed',
+        ], [
+            'cedula.unique' => 'La cédula ya se encuentra registrada.',
+            'nombre.regex' => 'El nombre solo puede contener letras, acentos españoles y espacios.',
         ]);
 
         // 2. Creamos el usuario en la base de datos

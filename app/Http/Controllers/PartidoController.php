@@ -16,19 +16,69 @@ class PartidoController extends Controller
 {
     public function indexPublico(Request $request)
     {
-        $etapas = Etapa::orderBy('id')->get();
+        $todasLasEtapas = Etapa::orderBy('id')->get();
+        $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
+        
         $selectedEtapaId = $request->query('etapa', $etapas->first()?->id);
+        
+        // Si selecciona "finales", filtrar por las etapas finales
+        $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
 
         $partidos = Partido::with(['etapa', 'equipoA', 'equipoB'])
-            ->when($selectedEtapaId, fn ($query) => $query->where('etapa_id', $selectedEtapaId))
+            ->when($etapasParaFiltro, fn ($query) => $query->whereIn('etapa_id', $etapasParaFiltro))
             ->orderByDesc('fecha_hora')
             ->get();
 
-        $total = $partidos->count();
-        $definidos = $partidos->filter(fn ($partido) => $partido->goles_a !== null && $partido->goles_b !== null)->count();
-        $avance = $total ? round($definidos * 100 / $total) : 0;
+        // Avance respecto a TODOS los partidos en la BD
+        $totalPartidos = Partido::count();
+        $partidosDefinidos = Partido::whereNotNull('goles_a')->whereNotNull('goles_b')->count();
+        $avance = $totalPartidos ? round($partidosDefinidos * 100 / $totalPartidos) : 0;
 
-        return view('partidos.index', compact('partidos', 'etapas', 'selectedEtapaId', 'avance', 'total', 'definidos'));
+        return view('partidos.index', compact('partidos', 'etapas', 'selectedEtapaId', 'avance', 'totalPartidos', 'partidosDefinidos'));
+    }
+
+    private function agruparEtapasConFinales($etapas)
+    {
+        $result = collect();
+        $finalesIds = [];
+        $tieneFinales = false;
+
+        foreach ($etapas as $etapa) {
+            $nombre = strtolower($etapa->nombre);
+            if (strpos($nombre, 'semifinal') !== false || 
+                strpos($nombre, 'tercer lugar') !== false || 
+                strpos($nombre, 'gran final') !== false) {
+                $finalesIds[] = $etapa->id;
+                $tieneFinales = true;
+            } else {
+                $result->push($etapa);
+            }
+        }
+
+        if ($tieneFinales) {
+            // Crear una etapa virtual para "finales"
+            $finalesEtapa = new \stdClass();
+            $finalesEtapa->id = 'finales';
+            $finalesEtapa->nombre = 'Finales';
+            $finalesEtapa->ids_agrupadas = $finalesIds;
+            $result->push((object)$finalesEtapa);
+        }
+
+        return $result;
+    }
+
+    private function obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas)
+    {
+        if ($selectedEtapaId === 'finales') {
+            return $todasLasEtapas->filter(function ($etapa) {
+                $nombre = strtolower($etapa->nombre);
+                return strpos($nombre, 'semifinal') !== false || 
+                       strpos($nombre, 'tercer lugar') !== false || 
+                       strpos($nombre, 'gran final') !== false;
+            })->pluck('id')->toArray();
+        }
+
+        return [$selectedEtapaId];
     }
 
     public function indexJugador(Request $request)
@@ -38,17 +88,33 @@ class PartidoController extends Controller
             abort(403);
         }
 
-        $etapas = Etapa::orderBy('id')->get();
+        $todasLasEtapas = Etapa::orderBy('id')->get();
+        $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
+        
         $selectedEtapaId = $request->query('etapa', $etapas->first()?->id);
+        
+        // Si selecciona "finales", filtrar por las etapas finales
+        $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
 
         $partidos = Partido::with(['etapa', 'equipoA', 'equipoB'])
-            ->when($selectedEtapaId, fn ($query) => $query->where('etapa_id', $selectedEtapaId))
+            ->when($etapasParaFiltro, fn ($query) => $query->whereIn('etapa_id', $etapasParaFiltro))
             ->orderByDesc('fecha_hora')
             ->get();
 
         $apuestas = Apuesta::where('usuario_id', $usuario->id)->get()->keyBy('partido_id');
 
-        return view('partidos.jugador', compact('partidos', 'etapas', 'selectedEtapaId', 'apuestas'));
+        // Contar adivinaciones PENDIENTES globales
+        // Partidos disponibles: equipos definidos, fecha definida, fecha aún no ha pasado
+        $apuestasDisponibles = Partido::where(function ($query) {
+            $query->whereNotNull('equipo_a_id')
+                  ->whereNotNull('equipo_b_id')
+                  ->whereNotNull('fecha_hora')
+                  ->where('fecha_hora', '>', Carbon::now());
+        })
+        ->whereNotIn('id', Apuesta::where('usuario_id', $usuario->id)->pluck('partido_id'))
+        ->count();
+
+        return view('partidos.jugador', compact('partidos', 'etapas', 'selectedEtapaId', 'apuestas', 'apuestasDisponibles'));
     }
 
     public function indexAdmin(Request $request)
@@ -58,11 +124,16 @@ class PartidoController extends Controller
             abort(403);
         }
 
-        $etapas = Etapa::orderBy('id')->get();
+        $todasLasEtapas = Etapa::orderBy('id')->get();
+        $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
+        
         $selectedEtapaId = $request->query('etapa', $etapas->first()?->id);
+        
+        // Si selecciona "finales", filtrar por las etapas finales
+        $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
 
         $partidos = Partido::with(['etapa', 'equipoA', 'equipoB'])
-            ->when($selectedEtapaId, fn ($query) => $query->where('etapa_id', $selectedEtapaId))
+            ->when($etapasParaFiltro, fn ($query) => $query->whereIn('etapa_id', $etapasParaFiltro))
             ->orderByDesc('fecha_hora')
             ->get();
 
@@ -111,7 +182,7 @@ class PartidoController extends Controller
         ]);
 
         if (Apuesta::where('usuario_id', $usuario->id)->where('partido_id', $partido->id)->exists()) {
-            return back()->with('error', 'Ya tienes una apuesta registrada para este partido.');
+            return back()->with('error', 'Ya tienes una adivinación registrada para este partido.');
         }
 
         $pregunta = Pregunta::where('estado', '!=', 2)
@@ -131,6 +202,6 @@ class PartidoController extends Controller
             'goles_b' => $request->goles_b,
         ]);
 
-        return back()->with('success', 'Tu apuesta fue registrada y se eligió una pregunta de trivia.');
+        return back()->with('success', 'Tu adivinación fue registrada y se eligió una pregunta de trivia.');
     }
 }

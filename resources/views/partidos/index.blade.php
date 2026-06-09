@@ -6,7 +6,7 @@
 <div class="container">
     <div class="page-title">Partidos</div>
 
-    <div class="controls">
+    <div class="controls controlmax">
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.index') }}">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="metric-box">
-            <strong>Avance:</strong> {{ $avance }}% · {{ $definidos }} de {{ $total }} partidos con resultado
+            <strong>Avance:</strong> {{ $avance }}% · {{ $partidosDefinidos }} / {{ $totalPartidos }}
         </div>
     </div>
 

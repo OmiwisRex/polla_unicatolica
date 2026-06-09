@@ -40,7 +40,7 @@ todas las vistas incluyen un header, con el título de la página a la izquierda
 
 ## Vistas
 
-- clasificación de jugadores, una tabla con el listado de jugadores ordenados por total de puntos, tiene 5 columnas: puesto (siendo relevantes arriba el 1, 2, 3), nombre del jugador, puntos por apuestas, puntos por preguntas, puntos totales (suma, lo que da el ranking). además si esta vista se ve con un usuario logeado, resaltará la fila asociada a dicho usuario según el ID primario interno.
+- clasificación de jugadores, una tabla con el listado de jugadores ordenados por total de puntos, tiene 5 columnas: puesto (siendo relevantes arriba el 1, 2, 3), nombre del jugador, puntos por adivinaciónes, puntos por preguntas, puntos totales (suma, lo que da el ranking). además si esta vista se ve con un usuario logeado, resaltará la fila asociada a dicho usuario según el ID primario interno.
 
 - partidos, una tabla que muestra los partidos como registros, consta de 5 columnas: la etapa, equipo A, equipo B (los dos muestran un ícono de bandera grande y abajo de este el nombre del equipo), la fecha y hora de juego, los goles hechos "g_a - g_b". en caso de no haber equipos, fechas, goles, se especifica con un texto acorde. se ordena la tabla según la fecha y hora, siendo arriba la más reciente. esta vista posee un selector arriba a la izquierda para filtrar por etapa y también posee un texto iformativo arriba a la derecha, que dice el porcentaje de avance del mundial (partidos con goles definidos / total).
 

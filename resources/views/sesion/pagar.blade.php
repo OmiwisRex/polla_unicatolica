@@ -11,19 +11,10 @@
     @endif
 
     <div class="form-card">
-        <p>Tu cuenta ya existe, pero aún no tiene permiso de jugador. Por favor, dirígete con el administrador para realizar el pago y activar tu acceso.</p>
-        <ul>
-            <li>Luego de pagar, el administrador cambiaró tu permiso a <strong>Jugar</strong>.</li>
-            <li>Hasta entonces solo podrás ver los partidos públicos.</li>
-        </ul>
-
-        <div class="actions">
-            <a href="{{ route('partidos.index') }}" class="btn btn-secondary">Volver a Partidos</a>
-            <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-                @csrf
-                <button type="submit" class="btn btn-primary">Cerrar sesión</button>
-            </form>
-        </div>
+        <p>Tu cuenta ya existe, pero aún no tienes permiso para jugar. Por favor, dirígete con el administrador para realizar el pago y activar tu acceso.</p><br>
+        <p>Lo encuentras en el segundo piso del edificio administrativo, sobre la biblioteca, en el salón P21A. Tiene un costo de $5000 COP.</p><br>
+        <p>Hasta entonces solo podrás ver los datos públicos.</p><br>
+        <p>Recuerda que también puedes dirigirte al administrador para cambiar tu contraseña o nombre de jugador.</p>
     </div>
 </div>
 @endsection

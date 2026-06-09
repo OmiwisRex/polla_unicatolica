@@ -13,7 +13,7 @@
         <div class="alert-danger">{{ session('error') }}</div>
     @endif
 
-    <div class="controls">
+    <div class="controls controlmax">
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.jugador') }}">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="metric-box">
-            <strong>Apuestas:</strong> {{ $apuestas->count() }} registradas
+            <strong>Adivinaciónes:</strong> {{ $apuestasDisponibles }} pendientes
         </div>
     </div>
 

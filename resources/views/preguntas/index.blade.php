@@ -10,9 +10,9 @@
         <div class="alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="controls">
-        <span>{{ $preguntas->count() }} pregunta{{ $preguntas->count() === 1 ? '' : 's' }} activ{{ $preguntas->count() === 1 ? 'a' : 'as' }}</span>
+    <div class="controls controlmax">
         <a href="{{ route('preguntas.create') }}" class="btn btn-primary btn-nav">Nueva pregunta</a>
+        <span>{{ $preguntas->count() }} pregunta{{ $preguntas->count() === 1 ? '' : 's' }} activa{{ $preguntas->count() === 1 ? '' : 's' }}</span>
     </div>
 
     @if($preguntas->isEmpty())
