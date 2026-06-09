@@ -11,7 +11,7 @@
             <tr>
                 <th>Puesto</th>
                 <th class="nombre-column">Nombre</th>
-                <th>Puntos adivinaciónes</th>
+                <th>Puntos predicciónes</th>
                 <th>Puntos preguntas</th>
                 <th>Total</th>
             </tr>

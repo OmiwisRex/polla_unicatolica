@@ -125,7 +125,7 @@ class PartidoController extends Controller
 
         $apuestas = Apuesta::where('usuario_id', $usuario->id)->get()->keyBy('partido_id');
 
-        // Contar adivinaciones PENDIENTES globales
+        // Contar predicciones PENDIENTES globales
         // Partidos disponibles: equipos definidos, fecha definida, fecha aún no ha pasado
         $apuestasDisponibles = Partido::where(function ($query) {
             $query->whereNotNull('equipo_a_id')
@@ -209,7 +209,7 @@ class PartidoController extends Controller
         $apuesta = $this->buscarApuestaPendiente($usuario, $partido);
 
         if ($apuesta && $apuesta->goles_a !== null && $apuesta->goles_b !== null) {
-            return response()->json(['message' => 'Ya tienes una adivinación registrada para este partido.'], 409);
+            return response()->json(['message' => 'Ya tienes una predicción registrada para este partido.'], 409);
         }
 
         if (! $apuesta) {
@@ -261,7 +261,7 @@ class PartidoController extends Controller
         }
 
         if ($apuesta->goles_a !== null && $apuesta->goles_b !== null) {
-            return back()->with('error', 'Ya tienes una adivinación registrada para este partido.');
+            return back()->with('error', 'Ya tienes una predicción registrada para este partido.');
         }
 
         $apuesta->load('pregunta');
@@ -277,7 +277,7 @@ class PartidoController extends Controller
 
         $this->actualizarPuntosPreguntasUsuario($usuario);
 
-        return back()->with('success', 'Tu adivinación fue registrada.');
+        return back()->with('success', 'Tu predicción fue registrada.');
     }
 
     private function buscarApuestaPendiente(Usuario $usuario, Partido $partido)

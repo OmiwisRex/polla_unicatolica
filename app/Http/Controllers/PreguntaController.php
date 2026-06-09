@@ -69,7 +69,7 @@ class PreguntaController extends Controller
 
         if (Apuesta::where('pregunta_id', $pregunta->id)->exists()) {
             return redirect()->route('preguntas.index')
-                ->with('error', 'No se puede eliminar la pregunta porque ya está siendo usada en adivinaciónes.');
+                ->with('error', 'No se puede eliminar la pregunta porque ya está siendo usada en predicciónes.');
         }
 
         $pregunta->update([

@@ -68,7 +68,7 @@ function puede_apostarse($partido) {
         return false; // Equipos aún no definidos
     }
     if ($partido['goles1_apostado'] !== null) {
-        return false; // Ya hay una adivinación
+        return false; // Ya hay un intento
     }
     if (partidos_pasado($partido['fecha'], $partido['hora'])) {
         return false; // Ya pasó la fecha
@@ -90,14 +90,14 @@ function puede_apostarse($partido) {
         <div class="header-content">
             <div>
                 <div class="logo">🏆 POLLA MUNDIAL 2026</div>
-                <div class="logo-subtitle">sistema de adivinación</div>
+                <div class="logo-subtitle">sistema de predicción</div>
             </div>
             <div style="font-size: 18px; color: #d4af37;">⚽</div>
         </div>
     </header>
 
     <div class="container">
-        <h1 class="page-title">Realizar Adivinaciónes</h1>
+        <h1 class="page-title">Realizar Predicciónes</h1>
 
         <div class="controls controlmax">
             <label for="filtro-etapa">Filtrar por etapa:</label>

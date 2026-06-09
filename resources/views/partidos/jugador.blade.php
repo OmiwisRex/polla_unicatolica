@@ -24,7 +24,7 @@
         </div>
 
         <div class="metric-box">
-            <strong>Adivinaciónes:</strong> {{ $apuestasDisponibles }} pendientes
+            <strong>Predicciónes:</strong> {{ $apuestasDisponibles }} pendientes
         </div>
     </div>
 
@@ -36,7 +36,7 @@
                 <th>Equipo B</th>
                 <th>Fecha y hora</th>
                 <th>Goles</th>
-                <th>Adivinación</th>
+                <th>Predicciónes</th>
                 <th>Puntos</th>
             </tr>
         </thead>
@@ -98,11 +98,11 @@
                             <span class="score-pill">{{ $apuesta->goles_a }} - {{ $apuesta->goles_b }}{{ $ganadorApuesta }}</span>
                         @elseif($apuesta)
                             <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal('{{ $partido->id }}')">
-                                Adivinar
+                                Predecir
                             </button>
                         @elseif($puedeApostar)
                             <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal('{{ $partido->id }}')">
-                                Adivinar
+                                Predecir
                             </button>
                         @elseif($partido->fecha_hora && $partido->fecha_hora->isPast())
                             <span class="status">Vencida</span>
@@ -134,7 +134,7 @@
 <div id="apuesta-modal" class="modal" hidden>
     <div class="modal-backdrop" onclick="closeApuestaModal()"></div>
     <div class="modal-box">
-        <h2>Registrar adivinación</h2>
+        <h2>Registrar predicción</h2>
         <form id="apuesta-form" method="POST" action="">
             @csrf
 
@@ -166,7 +166,7 @@
             </div>
 
             <div class="actions">
-                <button type="submit" class="btn btn-primary">Enviar adivinación</button>
+                <button type="submit" class="btn btn-primary">Enviar predicción</button>
             </div>
         </form>
     </div>
