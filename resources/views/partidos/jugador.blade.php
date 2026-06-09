@@ -85,7 +85,17 @@
                     </td>
                     <td>
                         @if($apuesta && $apuesta->goles_a !== null && $apuesta->goles_b !== null)
-                            <span class="score-pill">{{ $apuesta->goles_a }} - {{ $apuesta->goles_b }}</span>
+                            @php
+                                $ganadorApuesta = '';
+                                if ($apuesta->ganador === 0) {
+                                    $ganadorApuesta = ' ( A )';
+                                } elseif ($apuesta->ganador === 1) {
+                                    $ganadorApuesta = ' ( B )';
+                                } elseif ($apuesta->ganador === 2) {
+                                    $ganadorApuesta = ' (emp)';
+                                }
+                            @endphp
+                            <span class="score-pill">{{ $apuesta->goles_a }} - {{ $apuesta->goles_b }}{{ $ganadorApuesta }}</span>
                         @elseif($apuesta)
                             <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal('{{ $partido->id }}')">
                                 Adivinar
@@ -206,12 +216,7 @@
             preguntaEnunciado.textContent = data.pregunta.enunciado;
             preguntaOpciones.innerHTML = '';
 
-            const respuestas = [
-                { value: data.pregunta.correcta, isCorrect: true },
-                { value: data.pregunta.falsa1, isCorrect: false },
-                { value: data.pregunta.falsa2, isCorrect: false },
-                { value: data.pregunta.falsa3, isCorrect: false },
-            ];
+            const respuestas = data.pregunta.opciones.slice();
 
             shuffleArray(respuestas);
 
@@ -221,8 +226,8 @@
                 wrapper.className = 'radio-option';
                 wrapper.innerHTML = `
                     <label for="${optionId}">
-                        <input id="${optionId}" type="radio" name="respuesta" value="${escapeHtml(respuesta.value)}" required>
-                        ${escapeHtml(respuesta.value)}
+                        <input id="${optionId}" type="radio" name="respuesta" value="${respuesta.id}" required>
+                        ${escapeHtml(respuesta.texto)}
                     </label>
                 `;
                 preguntaOpciones.appendChild(wrapper);

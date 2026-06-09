@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apuesta;
 use App\Models\Pregunta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +66,12 @@ class PreguntaController extends Controller
         abort_if(Auth::user()->permiso_id !== 3, 403);
 
         $pregunta = Pregunta::findOrFail($id);
+
+        if (Apuesta::where('pregunta_id', $pregunta->id)->exists()) {
+            return redirect()->route('preguntas.index')
+                ->with('error', 'No se puede eliminar la pregunta porque ya está siendo usada en adivinaciónes.');
+        }
+
         $pregunta->update([
             'estado' => 2
         ]);

@@ -75,6 +75,8 @@
                             <button type="button" class="btn btn-secondary btn-small"
                                 data-partido="{{ json_encode([
                                     'id' => $partido->id,
+                                    'equipo_a' => $partido->equipoA?->nombre,
+                                    'equipo_b' => $partido->equipoB?->nombre,
                                     'goles_a' => $partido->goles_a,
                                     'goles_b' => $partido->goles_b,
                                 ]) }}"
@@ -91,7 +93,12 @@
                                 'id' => $partido->id,
                                 'equipo_a_id' => $partido->equipo_a_id,
                                 'equipo_b_id' => $partido->equipo_b_id,
+                                'equipo_a_nombre' => $partido->equipoA?->nombre,
+                                'equipo_b_nombre' => $partido->equipoB?->nombre,
+                                'etapa_nombre' => $partido->etapa?->nombre,
                                 'fecha_hora' => $partido->fecha_hora?->format('Y-m-d\TH:i'),
+                                'goles_a' => $partido->goles_a,
+                                'goles_b' => $partido->goles_b,
                             ]) }}"
                             onclick="openPartidoModal(JSON.parse(this.dataset.partido))">
                             Editar
@@ -140,6 +147,16 @@
                 <input id="fecha_hora" name="fecha_hora" type="datetime-local">
             </div>
 
+            <div class="group-form">
+                <label for="goles_a"><span id="edit_goles_a_label">Goles Equipo A</span></label>
+                <input id="goles_a" name="goles_a" type="number" min="0" max="30">
+            </div>
+
+            <div class="group-form">
+                <label for="goles_b"><span id="edit_goles_b_label">Goles Equipo B</span></label>
+                <input id="goles_b" name="goles_b" type="number" min="0" max="30">
+            </div>
+
             <div class="actions">
                 <button type="button" class="btn btn-secondary" onclick="closePartidoModal()">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -185,6 +202,15 @@
         document.getElementById('equipo_a_id').value = partido.equipo_a_id || '';
         document.getElementById('equipo_b_id').value = partido.equipo_b_id || '';
         document.getElementById('fecha_hora').value = partido.fecha_hora || '';
+        document.getElementById('goles_a').value = partido.goles_a ?? '';
+        document.getElementById('goles_b').value = partido.goles_b ?? '';
+        document.getElementById('edit_goles_a_label').textContent = 'Goles ' + (partido.equipo_a_nombre || 'Equipo A');
+        document.getElementById('edit_goles_b_label').textContent = 'Goles ' + (partido.equipo_b_nombre || 'Equipo B');
+
+        const esFaseGrupos = partido.etapa_nombre && partido.etapa_nombre.toLowerCase().includes('grupo');
+        document.getElementById('equipo_a_id').disabled = esFaseGrupos;
+        document.getElementById('equipo_b_id').disabled = esFaseGrupos;
+
         document.getElementById('partido-modal').hidden = false;
     }
 
@@ -197,8 +223,20 @@
         form.action = '/partidos/' + partido.id;
         document.getElementById('resultado_goles_a').value = partido.goles_a ?? '';
         document.getElementById('resultado_goles_b').value = partido.goles_b ?? '';
+        document.querySelector('label[for="resultado_goles_a"]').textContent = 'Goles ' + (partido.equipo_a || 'Equipo A');
+        document.querySelector('label[for="resultado_goles_b"]').textContent = 'Goles ' + (partido.equipo_b || 'Equipo B');
         document.getElementById('resultado-modal').hidden = false;
     }
+
+    document.getElementById('equipo_a_id').addEventListener('change', function () {
+        const selectedText = this.options[this.selectedIndex]?.text || 'Equipo A';
+        document.getElementById('edit_goles_a_label').textContent = 'Goles ' + selectedText;
+    });
+
+    document.getElementById('equipo_b_id').addEventListener('change', function () {
+        const selectedText = this.options[this.selectedIndex]?.text || 'Equipo B';
+        document.getElementById('edit_goles_b_label').textContent = 'Goles ' + selectedText;
+    });
 
     function closeResultadoModal() {
         document.getElementById('resultado-modal').hidden = true;

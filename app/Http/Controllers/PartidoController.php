@@ -11,6 +11,7 @@ use App\Models\Usuario;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PartidoController extends Controller
 {
@@ -19,7 +20,7 @@ class PartidoController extends Controller
         $todasLasEtapas = Etapa::orderBy('id')->get();
         $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
         
-        $selectedEtapaId = $request->query('etapa', $etapas->first()?->id);
+        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas);
         
         // Si selecciona "finales", filtrar por las etapas finales
         $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
@@ -81,6 +82,27 @@ class PartidoController extends Controller
         return [$selectedEtapaId];
     }
 
+    private function obtenerSelectedEtapaId(Request $request, $etapas)
+    {
+        $selected = $request->query('etapa');
+
+        $validValues = $etapas->pluck('id')->map(fn($id) => (string) $id)->push('finales')->unique();
+
+        if ($selected !== null) {
+            if ($validValues->contains((string) $selected)) {
+                $request->session()->put('selected_etapa_id', $selected);
+                return $selected;
+            }
+        }
+
+        $stored = $request->session()->get('selected_etapa_id');
+        if ($stored !== null && $validValues->contains((string) $stored)) {
+            return $stored;
+        }
+
+        return $etapas->first()?->id;
+    }
+
     public function indexJugador(Request $request)
     {
         $usuario = Auth::user();
@@ -91,7 +113,7 @@ class PartidoController extends Controller
         $todasLasEtapas = Etapa::orderBy('id')->get();
         $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
         
-        $selectedEtapaId = $request->query('etapa', $etapas->first()?->id);
+        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas);
         
         // Si selecciona "finales", filtrar por las etapas finales
         $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
@@ -127,7 +149,7 @@ class PartidoController extends Controller
         $todasLasEtapas = Etapa::orderBy('id')->get();
         $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
         
-        $selectedEtapaId = $request->query('etapa', $etapas->first()?->id);
+        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas);
         
         // Si selecciona "finales", filtrar por las etapas finales
         $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
@@ -166,6 +188,10 @@ class PartidoController extends Controller
 
         $partido->update($data);
 
+        if (array_key_exists('goles_a', $data) || array_key_exists('goles_b', $data)) {
+            $this->actualizarPuntosPorPartido($partido);
+        }
+
         return back()->with('success', 'Partido actualizado.');
     }
 
@@ -195,16 +221,21 @@ class PartidoController extends Controller
 
         $apuesta->load(['pregunta', 'partido.equipoA', 'partido.equipoB']);
 
+        $opciones = [
+            ['id' => 0, 'texto' => $apuesta->pregunta->correcta, 'correcta' => true],
+            ['id' => 1, 'texto' => $apuesta->pregunta->falsa1, 'correcta' => false],
+            ['id' => 2, 'texto' => $apuesta->pregunta->falsa2, 'correcta' => false],
+            ['id' => 3, 'texto' => $apuesta->pregunta->falsa3, 'correcta' => false],
+        ];
+
         return response()->json([
             'apuesta_id' => $apuesta->id,
             'equipo_a' => $partido->equipoA?->nombre ?? 'Equipo A',
             'equipo_b' => $partido->equipoB?->nombre ?? 'Equipo B',
             'pregunta' => [
                 'enunciado' => $apuesta->pregunta->enunciado,
-                'correcta' => $apuesta->pregunta->correcta,
-                'falsa1' => $apuesta->pregunta->falsa1,
-                'falsa2' => $apuesta->pregunta->falsa2,
-                'falsa3' => $apuesta->pregunta->falsa3,
+                'opciones' => $opciones,
+                'correct_index' => 0,
             ],
         ]);
     }
@@ -220,7 +251,7 @@ class PartidoController extends Controller
             'goles_a' => 'required|integer|min:0|max:30',
             'goles_b' => 'required|integer|min:0|max:30',
             'ganador' => 'required|in:0,1,2',
-            'respuesta' => 'required|string|max:1024',
+            'respuesta' => 'required|integer|in:0,1,2,3',
         ]);
 
         $apuesta = $this->buscarApuestaPendiente($usuario, $partido);
@@ -235,14 +266,16 @@ class PartidoController extends Controller
 
         $apuesta->load('pregunta');
 
-        $ptsPregunta = $request->respuesta === $apuesta->pregunta->correcta ? 2 : 0;
+        $ptsPregunta = (int) $request->respuesta === 0 ? 2 : 0;
 
         $apuesta->update([
-            'goles_a' => $request->goles_a,
-            'goles_b' => $request->goles_b,
+            'goles_a' => (int) $request->goles_a,
+            'goles_b' => (int) $request->goles_b,
             'ganador' => (int) $request->ganador,
             'pts_pregunta' => $ptsPregunta,
         ]);
+
+        $this->actualizarPuntosPreguntasUsuario($usuario);
 
         return back()->with('success', 'Tu adivinación fue registrada.');
     }
@@ -275,5 +308,56 @@ class PartidoController extends Controller
             'partido_id' => $partido->id,
             'pregunta_id' => $pregunta->id,
         ]);
+    }
+
+    private function actualizarPuntosPorPartido(Partido $partido)
+    {
+        if ($partido->goles_a === null || $partido->goles_b === null) {
+            return;
+        }
+
+        $partidoGanador = $partido->goles_a > $partido->goles_b ? 0 : ($partido->goles_b > $partido->goles_a ? 1 : 2);
+
+        $apuestas = Apuesta::where('partido_id', $partido->id)->get();
+
+        foreach ($apuestas as $apuesta) {
+            $ptsApuesta = 0;
+
+            if ($apuesta->goles_a !== null && (int) $apuesta->goles_a === (int) $partido->goles_a) {
+                $ptsApuesta += 1;
+            }
+
+            if ($apuesta->goles_b !== null && (int) $apuesta->goles_b === (int) $partido->goles_b) {
+                $ptsApuesta += 1;
+            }
+
+            if ($apuesta->ganador !== null && (int) $apuesta->ganador === $partidoGanador) {
+                $ptsApuesta += 2;
+            }
+
+            $apuesta->update(['pts_apuesta' => $ptsApuesta]);
+        }
+
+        $this->actualizarPuntajesUsuarios();
+    }
+
+    private function actualizarPuntajesUsuarios()
+    {
+        $usersPoints = Apuesta::selectRaw('usuario_id, COALESCE(SUM(pts_apuesta), 0) as total')
+            ->groupBy('usuario_id')
+            ->pluck('total', 'usuario_id');
+
+        Usuario::chunk(100, function ($usuarios) use ($usersPoints) {
+            foreach ($usuarios as $usuario) {
+                $usuario->pts_apuestas = $usersPoints->get($usuario->id, 0);
+                $usuario->save();
+            }
+        });
+    }
+
+    private function actualizarPuntosPreguntasUsuario(Usuario $usuario)
+    {
+        $usuario->pts_preguntas = Apuesta::where('usuario_id', $usuario->id)->sum('pts_pregunta');
+        $usuario->save();
     }
 }

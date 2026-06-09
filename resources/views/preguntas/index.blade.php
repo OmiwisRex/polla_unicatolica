@@ -9,6 +9,9 @@
     @if(session('success'))
         <div class="alert-success">{{ session('success') }}</div>
     @endif
+    @if(session('error'))
+        <div class="alert-danger">{{ session('error') }}</div>
+    @endif
 
     <div class="controls controlmax">
         <a href="{{ route('preguntas.create') }}" class="btn btn-primary btn-nav">Nueva pregunta</a>
@@ -32,7 +35,7 @@
                             <strong>{{ $pregunta->enunciado }}</strong>
                             <div class="answer">R: {{ $pregunta->correcta }}</div>
                         </td>
-                        <td>
+                        <td class="actions-cell"d>
                             <a href="{{ route('preguntas.edit', $pregunta) }}" class="btn btn-secondary">Editar</a>
                             <form action="{{ route('preguntas.destroy', $pregunta) }}" method="POST" class="inline-form">
                                 @csrf
