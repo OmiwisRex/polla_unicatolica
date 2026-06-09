@@ -63,6 +63,16 @@
                     <td>
                         @if($partido->goles_a !== null && $partido->goles_b !== null)
                             <span class="score-pill">{{ $partido->goles_a }} - {{ $partido->goles_b }}</span>
+                        @elseif($partido->equipo_a_id && $partido->equipo_b_id && $partido->fecha_hora && $partido->fecha_hora->isPast())
+                            <button type="button" class="btn btn-secondary btn-small"
+                                data-partido="{{ json_encode([
+                                    'id' => $partido->id,
+                                    'goles_a' => $partido->goles_a,
+                                    'goles_b' => $partido->goles_b,
+                                ]) }}"
+                                onclick="openResultadoModal(JSON.parse(this.dataset.partido))">
+                                Marcador
+                            </button>
                         @else
                             <span class="status">Pendiente</span>
                         @endif
@@ -74,8 +84,6 @@
                                 'equipo_a_id' => $partido->equipo_a_id,
                                 'equipo_b_id' => $partido->equipo_b_id,
                                 'fecha_hora' => $partido->fecha_hora?->format('Y-m-d\TH:i'),
-                                'goles_a' => $partido->goles_a,
-                                'goles_b' => $partido->goles_b,
                             ]) }}"
                             onclick="openPartidoModal(JSON.parse(this.dataset.partido))">
                             Editar
@@ -84,7 +92,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="no-data">No hay partidos para esta etapa.</td>
+                    <td colspan="6" class="no-data">No hay partidos para esta etapa.</td>
                 </tr>
             @endforelse
         </tbody>
@@ -124,19 +132,35 @@
                 <input id="fecha_hora" name="fecha_hora" type="datetime-local">
             </div>
 
-            <div class="group-form">
-                <label for="goles_a">Goles Equipo A</label>
-                <input id="goles_a" name="goles_a" type="number" min="0" max="30">
-            </div>
-
-            <div class="group-form">
-                <label for="goles_b">Goles Equipo B</label>
-                <input id="goles_b" name="goles_b" type="number" min="0" max="30">
-            </div>
-
             <div class="actions">
                 <button type="button" class="btn btn-secondary" onclick="closePartidoModal()">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="resultado-modal" class="modal" hidden>
+    <div class="modal-backdrop" onclick="closeResultadoModal()"></div>
+    <div class="modal-box">
+        <h2>Ingresar resultado</h2>
+        <form id="resultado-edit-form" method="POST" action="">
+            @csrf
+            @method('PATCH')
+
+            <div class="group-form">
+                <label for="resultado_goles_a">Goles Equipo A</label>
+                <input id="resultado_goles_a" name="goles_a" type="number" min="0" max="30" required>
+            </div>
+
+            <div class="group-form">
+                <label for="resultado_goles_b">Goles Equipo B</label>
+                <input id="resultado_goles_b" name="goles_b" type="number" min="0" max="30" required>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" onclick="closeResultadoModal()">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar marcador</button>
             </div>
         </form>
     </div>
@@ -153,13 +177,24 @@
         document.getElementById('equipo_a_id').value = partido.equipo_a_id || '';
         document.getElementById('equipo_b_id').value = partido.equipo_b_id || '';
         document.getElementById('fecha_hora').value = partido.fecha_hora || '';
-        document.getElementById('goles_a').value = partido.goles_a ?? '';
-        document.getElementById('goles_b').value = partido.goles_b ?? '';
         document.getElementById('partido-modal').hidden = false;
     }
 
     function closePartidoModal() {
         document.getElementById('partido-modal').hidden = true;
     }
+
+    function openResultadoModal(partido) {
+        const form = document.getElementById('resultado-edit-form');
+        form.action = '/partidos/' + partido.id;
+        document.getElementById('resultado_goles_a').value = partido.goles_a ?? '';
+        document.getElementById('resultado_goles_b').value = partido.goles_b ?? '';
+        document.getElementById('resultado-modal').hidden = false;
+    }
+
+    function closeResultadoModal() {
+        document.getElementById('resultado-modal').hidden = true;
+    }
 </script>
+
 @endsection

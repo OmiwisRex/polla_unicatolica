@@ -76,8 +76,16 @@
                         @endif
                     </td>
                     <td>
-                        @if($apuesta)
+                        @if($apuesta && $apuesta->goles_a !== null && $apuesta->goles_b !== null)
                             <span class="score-pill">{{ $apuesta->goles_a }} - {{ $apuesta->goles_b }}</span>
+                        @elseif($apuesta)
+                            <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal({{ $partido->id }})">
+                                Adivinar
+                            </button>
+                        @elseif($puedeApostar)
+                            <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal({{ $partido->id }})">
+                                Adivinar
+                            </button>
                         @elseif($partido->fecha_hora && $partido->fecha_hora->isPast())
                             <span class="status">Vencida</span>
                         @else
@@ -98,7 +106,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="no-data">No hay partidos para esta etapa.</td>
+                    <td colspan="7" class="no-data">No hay partidos para esta etapa.</td>
                 </tr>
             @endforelse
         </tbody>
@@ -112,6 +120,8 @@
         <form id="apuesta-form" method="POST" action="">
             @csrf
 
+            <input id="apuesta_id" name="apuesta_id" type="hidden">
+
             <div class="group-form">
                 <label for="goles_a">Goles Equipo A</label>
                 <input id="goles_a" name="goles_a" type="number" min="0" max="30" required>
@@ -122,8 +132,13 @@
                 <input id="goles_b" name="goles_b" type="number" min="0" max="30" required>
             </div>
 
+            <div id="pregunta-box" class="group-form" hidden>
+                <label>Pregunta sobre la Unicatólica</label>
+                <div id="pregunta-enunciado" class="question-text"></div>
+                <div id="pregunta-opciones" class="options-list"></div>
+            </div>
+
             <div class="actions">
-                <button type="button" class="btn btn-secondary" onclick="closeApuestaModal()">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Enviar adivinación</button>
             </div>
         </form>
@@ -135,12 +150,84 @@
         window.location.href = this.dataset.route + '?etapa=' + this.value;
     });
 
-    function openApuestaModal(partidoId) {
-        const form = document.getElementById('apuesta-form');
-        form.action = '/partidos/' + partidoId + '/apostar';
-        document.getElementById('goles_a').value = '';
-        document.getElementById('goles_b').value = '';
-        document.getElementById('apuesta-modal').hidden = false;
+    async function prepareApuestaModal(partidoId) {
+        const url = '/partidos/' + partidoId + '/preparar-apuesta';
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({}),
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                alert(data.message || 'No se pudo preparar la apuesta.');
+                return;
+            }
+
+            const form = document.getElementById('apuesta-form');
+            form.action = '/partidos/' + partidoId + '/apostar';
+            document.getElementById('apuesta_id').value = data.apuesta_id ?? '';
+            document.getElementById('goles_a').value = '';
+            document.getElementById('goles_b').value = '';
+
+            const preguntaBox = document.getElementById('pregunta-box');
+            const preguntaEnunciado = document.getElementById('pregunta-enunciado');
+            const preguntaOpciones = document.getElementById('pregunta-opciones');
+
+            preguntaBox.hidden = false;
+            preguntaEnunciado.textContent = data.pregunta.enunciado;
+            preguntaOpciones.innerHTML = '';
+
+            const respuestas = [
+                { value: data.pregunta.correcta, isCorrect: true },
+                { value: data.pregunta.falsa1, isCorrect: false },
+                { value: data.pregunta.falsa2, isCorrect: false },
+                { value: data.pregunta.falsa3, isCorrect: false },
+            ];
+
+            shuffleArray(respuestas);
+
+            respuestas.forEach((respuesta, index) => {
+                const optionId = 'respuesta_' + index;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'radio-option';
+                wrapper.innerHTML = `
+                    <label for="${optionId}">
+                        <input id="${optionId}" type="radio" name="respuesta" value="${escapeHtml(respuesta.value)}" required>
+                        ${escapeHtml(respuesta.value)}
+                    </label>
+                `;
+                preguntaOpciones.appendChild(wrapper);
+            });
+
+            document.getElementById('apuesta-modal').hidden = false;
+        } catch (error) {
+            console.error(error);
+            alert('Hubo un error al preparar la apuesta.');
+        }
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
 
     function closeApuestaModal() {

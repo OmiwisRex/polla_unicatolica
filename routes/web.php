@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
 
     // Vista de partidos para el Jugador (views/partidos/jugador.blade.php)
     Route::get('/partidos-jugador', [PartidoController::class, 'indexJugador'])->name('partidos.jugador');
+    Route::post('/partidos/{partido}/preparar-apuesta', [PartidoController::class, 'prepararApuesta'])->name('partidos.prepararApuesta');
     Route::post('/partidos/{partido}/apostar', [PartidoController::class, 'apostar'])->name('partidos.apostar');
 
     // Vista de partidos para el Administrador (views/partidos/admin.blade.php)

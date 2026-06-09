@@ -75,18 +75,25 @@ class AuthController extends Controller
             'nombre.regex' => 'El nombre solo puede contener letras, acentos españoles y espacios.',
         ]);
 
-        // 2. Creamos el usuario en la base de datos
-        // Por defecto: pts_apuestas y pts_preguntas inician en 0, permiso_id es 1 (Ninguno)
+        // 2. Determinamos si es el primer usuario registrado
+        $esPrimerUsuario = Usuario::count() === 0;
+
+        // 3. Creamos el usuario en la base de datos
         $usuario = Usuario::create([
             'cedula' => $request->cedula,
             'nombre' => $request->nombre,
             'clave' => Hash::make($request->clave),
+            'permiso_id' => $esPrimerUsuario ? 3 : 1,
         ]);
 
-        // 3. Lo logueamos automáticamente inmediatamente después del registro
+        // 4. Lo logueamos automáticamente inmediatamente después del registro
         Auth::login($usuario);
 
-        // 4. Según requerimiento: Al registrarse va directo a la pantalla "pagar"
+        // 5. Si es el primer usuario y quedó como administrador, lo enviamos a administración
+        if ($usuario->permiso_id === 3) {
+            return redirect()->route('partidos.admin')->with('success', 'Registro exitoso. Ya tienes permisos de administrador.');
+        }
+
         return redirect()->route('pagar')->with('success', 'Registro exitoso.');
     }
 

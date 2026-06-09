@@ -169,6 +169,44 @@ class PartidoController extends Controller
         return back()->with('success', 'Partido actualizado.');
     }
 
+    public function prepararApuesta(Request $request, Partido $partido)
+    {
+        $usuario = Auth::user();
+        if ($usuario->permiso_id !== 2) {
+            abort(403);
+        }
+
+        if (! $partido->equipo_a_id || ! $partido->equipo_b_id || ! $partido->fecha_hora || $partido->fecha_hora->isPast()) {
+            return response()->json(['message' => 'El partido no está disponible para apostar.'], 422);
+        }
+
+        $apuesta = $this->buscarApuestaPendiente($usuario, $partido);
+
+        if ($apuesta && $apuesta->goles_a !== null && $apuesta->goles_b !== null) {
+            return response()->json(['message' => 'Ya tienes una adivinación registrada para este partido.'], 409);
+        }
+
+        if (! $apuesta) {
+            $apuesta = $this->crearApuestaPendiente($usuario, $partido);
+            if (! $apuesta) {
+                return response()->json(['message' => 'No hay preguntas disponibles para asignar en este momento.'], 422);
+            }
+        }
+
+        $apuesta->load('pregunta');
+
+        return response()->json([
+            'apuesta_id' => $apuesta->id,
+            'pregunta' => [
+                'enunciado' => $apuesta->pregunta->enunciado,
+                'correcta' => $apuesta->pregunta->correcta,
+                'falsa1' => $apuesta->pregunta->falsa1,
+                'falsa2' => $apuesta->pregunta->falsa2,
+                'falsa3' => $apuesta->pregunta->falsa3,
+            ],
+        ]);
+    }
+
     public function apostar(Request $request, Partido $partido)
     {
         $usuario = Auth::user();
@@ -179,29 +217,54 @@ class PartidoController extends Controller
         $request->validate([
             'goles_a' => 'required|integer|min:0|max:30',
             'goles_b' => 'required|integer|min:0|max:30',
+            'respuesta' => 'required|string|max:1024',
         ]);
 
-        if (Apuesta::where('usuario_id', $usuario->id)->where('partido_id', $partido->id)->exists()) {
+        $apuesta = $this->buscarApuestaPendiente($usuario, $partido);
+
+        if (! $apuesta || ! $apuesta->pregunta_id) {
+            return back()->with('error', 'Primero debes iniciar la apuesta desde el modal para asignar una pregunta.');
+        }
+
+        if ($apuesta->goles_a !== null && $apuesta->goles_b !== null) {
             return back()->with('error', 'Ya tienes una adivinación registrada para este partido.');
         }
 
-        $pregunta = Pregunta::where('estado', '!=', 2)
-            ->whereNotIn('id', Apuesta::where('usuario_id', $usuario->id)->pluck('pregunta_id'))
-            ->inRandomOrder()
-            ->first();
-
-        if (! $pregunta) {
-            return back()->with('error', 'No hay preguntas disponibles para asignar en este momento.');
-        }
-
-        Apuesta::create([
-            'usuario_id' => $usuario->id,
-            'partido_id' => $partido->id,
-            'pregunta_id' => $pregunta->id,
+        $apuesta->update([
             'goles_a' => $request->goles_a,
             'goles_b' => $request->goles_b,
         ]);
 
-        return back()->with('success', 'Tu adivinación fue registrada y se eligió una pregunta de trivia.');
+        return back()->with('success', 'Tu adivinación fue registrada.');
+    }
+
+    private function buscarApuestaPendiente(Usuario $usuario, Partido $partido)
+    {
+        return Apuesta::where('usuario_id', $usuario->id)
+            ->where('partido_id', $partido->id)
+            ->first();
+    }
+
+    private function obtenerPreguntaAleatoriaParaUsuario(Usuario $usuario)
+    {
+        return Pregunta::where('estado', '!=', 2)
+            ->whereNotIn('id', Apuesta::where('usuario_id', $usuario->id)->pluck('pregunta_id'))
+            ->inRandomOrder()
+            ->first();
+    }
+
+    private function crearApuestaPendiente(Usuario $usuario, Partido $partido)
+    {
+        $pregunta = $this->obtenerPreguntaAleatoriaParaUsuario($usuario);
+
+        if (! $pregunta) {
+            return null;
+        }
+
+        return Apuesta::create([
+            'usuario_id' => $usuario->id,
+            'partido_id' => $partido->id,
+            'pregunta_id' => $pregunta->id,
+        ]);
     }
 }
