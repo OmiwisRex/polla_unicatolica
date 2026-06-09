@@ -86,6 +86,10 @@ todas las vistas incluyen un header, con el título de la página a la izquierda
 
 - en la carpeta sketchs/ hay dos ejemplos, otro (preguntas_crud) es un CRUD sencillo, sin login, para ir llenando las preguntas mientras se desarrolla el software, pero da una idea de cómo debe quedar ese apartado.
 
+## Páginas web
+
+- https://flagicons.lipis.dev/ banderas del mundo en SVG con su CSS
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
@@ -100,9 +104,10 @@ para armar el proyecto luego de clonarlo del repositorio:
 4. configurar DB en .env
 5. php artisan migrate:fresh --seed
 6. npm install
-7. npm run dev
-8. php artisan config:clear
-   php artisan route:clear
-   php artisan view:clear
-   php artisan cache:clear
-9. php artisan serve
+7. npm install flag-icons
+8. npm run dev
+9. php artisan config:clear
+9. php artisan route:clear
+9. php artisan view:clear
+9. php artisan cache:clear
+10. php artisan serve

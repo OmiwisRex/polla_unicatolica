@@ -50,13 +50,21 @@
                     <td>{{ $partido->etapa?->nombre ?? 'Sin etapa' }}</td>
                     <td>
                         <div class="team-box">
-                            <span class="team-flag">{{ $partido->equipoA?->bandera ?? '❓' }}</span>
+                            @if($partido->equipoA?->bandera)
+                                <span class="team-flag fi fi-{{ $partido->equipoA->bandera }}"></span>
+                            @else
+                                <span class="team-flag">❓</span>
+                            @endif
                             <span class="team-name">{{ $partido->equipoA?->nombre ?? 'Por definir' }}</span>
                         </div>
                     </td>
                     <td>
                         <div class="team-box">
-                            <span class="team-flag">{{ $partido->equipoB?->bandera ?? '❓' }}</span>
+                            @if($partido->equipoB?->bandera)
+                                <span class="team-flag fi fi-{{ $partido->equipoB->bandera }}"></span>
+                            @else
+                                <span class="team-flag">❓</span>
+                            @endif
                             <span class="team-name">{{ $partido->equipoB?->nombre ?? 'Por definir' }}</span>
                         </div>
                     </td>
@@ -79,11 +87,11 @@
                         @if($apuesta && $apuesta->goles_a !== null && $apuesta->goles_b !== null)
                             <span class="score-pill">{{ $apuesta->goles_a }} - {{ $apuesta->goles_b }}</span>
                         @elseif($apuesta)
-                            <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal({{ $partido->id }})">
+                            <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal('{{ $partido->id }}')">
                                 Adivinar
                             </button>
                         @elseif($puedeApostar)
-                            <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal({{ $partido->id }})">
+                            <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal('{{ $partido->id }}')">
                                 Adivinar
                             </button>
                         @elseif($partido->fecha_hora && $partido->fecha_hora->isPast())

@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 32);
-            $table->string('bandera', 32);
+            $table->string('bandera', 12);
         });
     }
 

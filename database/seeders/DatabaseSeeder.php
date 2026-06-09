@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
             PermisosSeeder::class,
             EtapasSeeder::class,
             EquiposSeeder::class,
-            PartidosSeeder::class
+            PartidosSeeder::class,
+            PreguntasSeeder::class
         ]);
     }
 }
