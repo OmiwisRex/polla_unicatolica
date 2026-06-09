@@ -11,7 +11,7 @@
 .team-name {
   display: block;
   font-size: 15px;
-  color: #e8e8e8;
+  color: var(--amarillo-claro);
 }
 
 .match-label {
@@ -21,7 +21,7 @@
 }
 
 .status {
-  color: #c0c0c0;
+  color: var(--gris-claro);
   font-size: 14px;
 }
 
@@ -30,7 +30,7 @@
   padding: 8px 12px;
   border-radius: 999px;
   background: rgba(212, 175, 55, 0.15);
-  color: #d4af37;
+  color: var(--amarillo-claro);
   font-weight: bold;
 }
 
@@ -39,7 +39,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
-  color: #d4af37;
+  color: var(--amarillo-claro);
   font-weight: bold;
 }
 
@@ -56,7 +56,7 @@
 
 /* Mejorar CSS del selector de etapa */
 select {
-  background-color: #1f1f1f;
+  background-color: var(--gris-oscuro);
   color: #e8e8e8;
   border: 2px solid #5c471c;
   border-radius: 6px;
@@ -66,19 +66,19 @@ select {
 }
 
 select option {
-  background-color: #1f1f1f;
+  background-color: var(--gris-oscuro);
   color: #8a8a8a;
   padding: 8px;
 }
 
 select option:checked {
   background: linear-gradient(#5c471c, #5c471c);
-  color: #d4af37;
+  color: var(--amarillo-claro);
 }
 
 select:focus {
   outline: none;
-  border-color: #d4af37;
+  border-color: var(--amarillo-claro);
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
 }
 
@@ -89,7 +89,7 @@ select:focus {
 }
 
 .usuario-actual td {
-  color: #d4af37 !important;
+  color: var(--amarillo-claro) !important;
   font-weight: bold !important;
 }
 
@@ -111,7 +111,7 @@ select:focus {
 .modal-box {
   position: relative;
   background: rgba(30, 30, 30, 0.98);
-  border: 1px solid #d4af37;
+  border: 1px solid var(--amarillo-claro);
   border-radius: 12px;
   padding: 28px;
   width: min(520px, calc(100% - 40px));
@@ -123,7 +123,7 @@ select:focus {
 
 .modal-box h2 {
   margin-bottom: 18px;
-  color: #d4af37;
+  color: var(--amarillo-claro);
 }
 
 .modal-box .group-form label {
@@ -191,4 +191,12 @@ select:focus {
     box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     vertical-align: middle; 
     margin: 0 5px;
+}
+
+/* logo unicatolica */
+.navbar-logo {
+    height: auto;
+    width: 30vw;
+    object-fit: contain;
+    padding: 2px 0;
 }

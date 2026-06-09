@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'Georgia', 'Garamond', serif;
+  font-family: 'Myriad Pro', 'Times New Roman', Times, serif;
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   color: #e8e8e8;
   min-height: 100vh;
@@ -94,7 +94,7 @@ header {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Myriad Pro', 'Times New Roman', Times, serif;
 }
 
 .btn-primary {

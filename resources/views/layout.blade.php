@@ -11,7 +11,7 @@
     <header>
         <div class="header-content">
             <div>
-                <a href="{{ route('index') }}" class="logo">Polla Unicatólica</a>
+                <img src="{{ asset('img/horizontal colorAmarillo.png') }}" alt="Logo Institución" class="navbar-logo">
                 <div class="logo-subtitle">Polla Mundial 2026 + Trivia Institucional</div>
             </div>
 
