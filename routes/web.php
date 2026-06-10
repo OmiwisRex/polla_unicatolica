@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
 
     // Vista de partidos para el Administrador (views/partidos/admin.blade.php)
     Route::get('/partidos-admin', [PartidoController::class, 'indexAdmin'])->name('partidos.admin');
-    Route::patch('/partidos/{partido}', [PartidoController::class, 'update'])->name('partidos.update');
+    Route::match(['put', 'patch'], '/partidos/{partido}', [PartidoController::class, 'update'])->name('partidos.update');
 
     // CRUD de Preguntas (Solo Admin deberia entrar, views/preguntas/...) 
     // Excluimos 'show' porque tus vistas son index, create y edit

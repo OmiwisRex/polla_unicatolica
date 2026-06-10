@@ -8,4 +8,4 @@ Frontend:
 
 Backend:
 
-- revisar por qué a veces no computa bien los puntos por predicción de parido.
+- admin no está pudiendo editar partido, al pulsar guardar cambios sale página no encontrada.

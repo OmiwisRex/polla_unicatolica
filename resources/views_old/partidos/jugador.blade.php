@@ -177,10 +177,8 @@
         window.location.href = this.dataset.route + '?etapa=' + this.value;
     });
 
-    const partidosBaseUrl = "{{ url('/partidos') }}";
-
     async function prepareApuestaModal(partidoId) {
-        const url = partidosBaseUrl + '/' + partidoId + '/preparar-apuesta';
+        const url = '/partidos/' + partidoId + '/preparar-apuesta';
         const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         try {
@@ -201,7 +199,7 @@
             }
 
             const form = document.getElementById('apuesta-form');
-            form.action = partidosBaseUrl + '/' + partidoId + '/apostar';
+            form.action = '/partidos/' + partidoId + '/apostar';
             document.getElementById('apuesta_id').value = data.apuesta_id ?? '';
             document.getElementById('goles_a').value = '';
             document.getElementById('goles_b').value = '';

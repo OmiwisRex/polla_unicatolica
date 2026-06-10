@@ -196,11 +196,9 @@
         window.location.href = this.dataset.route + '?etapa=' + this.value;
     });
 
-    const partidosBaseUrl = "{{ url('/partidos') }}";
-
     function openPartidoModal(partido) {
         const form = document.getElementById('partido-edit-form');
-        form.action = partidosBaseUrl + '/' + partido.id;
+        form.action = '/partidos/' + partido.id;
         document.getElementById('equipo_a_id').value = partido.equipo_a_id || '';
         document.getElementById('equipo_b_id').value = partido.equipo_b_id || '';
         document.getElementById('fecha_hora').value = partido.fecha_hora || '';
@@ -222,7 +220,7 @@
 
     function openResultadoModal(partido) {
         const form = document.getElementById('resultado-edit-form');
-        form.action = partidosBaseUrl + '/' + partido.id;
+        form.action = '/partidos/' + partido.id;
         document.getElementById('resultado_goles_a').value = partido.goles_a ?? '';
         document.getElementById('resultado_goles_b').value = partido.goles_b ?? '';
         document.querySelector('label[for="resultado_goles_a"]').textContent = 'Goles ' + (partido.equipo_a || 'Equipo A');
