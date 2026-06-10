@@ -273,26 +273,26 @@ select:focus {
 }
 
 /* ================================================================
-   RESPONSIVE MÓVIL — ≤ 640px
+   RESPONSIVE MÓVIL — ≤ 768px
    Técnica: stack-cards (cada fila se convierte en tarjeta)
    ================================================================ */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
 
     /* Ocultar encabezados de tabla */
-    .partidos-table thead {
+    .responsive-table thead {
         display: none;
     }
 
     /* Cada fila se convierte en una tarjeta */
-    .partidos-table,
-    .partidos-table tbody,
-    .partidos-table tr,
-    .partidos-table td {
+    .responsive-table,
+    .responsive-table tbody,
+    .responsive-table tr,
+    .responsive-table td {
         display: block;
         width: 100%;
     }
 
-    .partidos-table tr {
+    .responsive-table tr {
         background: #f5f8fc;
         border: 1px solid #d0dae6;
         border-radius: 10px;
@@ -301,12 +301,12 @@ select:focus {
         overflow: hidden;
     }
 
-    .partidos-table tr:last-child {
+    .responsive-table tr:last-child {
         margin-bottom: 0;
     }
 
     /* Cada celda muestra su etiqueta a la izquierda */
-    .partidos-table td {
+    .responsive-table td {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -316,12 +316,12 @@ select:focus {
         color: var(--azul-oscuro);
     }
 
-    .partidos-table td:last-child {
+    .responsive-table td:last-child {
         border-bottom: none;
     }
 
     /* Etiqueta generada desde data-label */
-    .partidos-table td::before {
+    .responsive-table td::before {
         content: attr(data-label);
         flex-shrink: 0;
         width: 90px;
@@ -334,16 +334,16 @@ select:focus {
     }
 
     /* El contenido de la celda ocupa el resto */
-    .partidos-table td > * {
+    .responsive-table td > * {
         flex: 1;
     }
 
     /* Fila vacía: centrar mensaje */
-    .partidos-table td[colspan] {
+    .responsive-table td[colspan] {
         justify-content: center;
     }
 
-    .partidos-table td[colspan]::before {
+    .responsive-table td[colspan]::before {
         display: none;
     }
 

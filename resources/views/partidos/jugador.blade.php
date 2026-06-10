@@ -58,7 +58,7 @@
                             <span class="team-name">{{ $partido->equipoA?->nombre ?? 'Por definir' }}</span>
                         </div>
                     </td>
-                    <td>
+                    <td data-label="Equipo B">
                         <div class="team-box">
                             @if($partido->equipoB?->bandera)
                                 <span class="team-flag fi fi-{{ $partido->equipoB->bandera }}"></span>
@@ -68,7 +68,7 @@
                             <span class="team-name">{{ $partido->equipoB?->nombre ?? 'Por definir' }}</span>
                         </div>
                     </td>
-                    <td>
+                    <td data-label="Fecha y hora">
                         @if($partido->fecha_hora)
                             <div>{{ $partido->fecha_hora->format('d/m/Y') }}</div>
                             <div class="sub-text">{{ $partido->fecha_hora->format('h:i A') }}</div>
@@ -110,7 +110,7 @@
                             <span class="status">Esperando</span>
                         @endif
                     </td>
-                    <td>
+                    <td data-label="Puntos">
                         @if($apuesta)
                             @php
                                 $apuestaPts = $apuesta->pts_apuesta ?? 0;
