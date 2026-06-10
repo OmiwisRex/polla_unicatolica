@@ -3,11 +3,9 @@
 Frontend:
 
 - cambiar la paleta de colores.
-- hacer el diseño responsivo.
 - agregar imágen de fondo alusiva al fútbol.
+- hacer el diseño responsivo.
 
 Backend:
 
-- verificar la zona horaria, no UT sino Colombia.
-- al elegir ganador poner por defecto empate.
-- no está computando bien los puntos, no cuenta +2 al ganador.
+- revisar por qué a veces no computa bien los puntos por predicción de parido.

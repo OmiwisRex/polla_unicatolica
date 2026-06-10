@@ -131,7 +131,8 @@ class PartidoController extends Controller
             $query->whereNotNull('equipo_a_id')
                   ->whereNotNull('equipo_b_id')
                   ->whereNotNull('fecha_hora')
-                  ->where('fecha_hora', '>', Carbon::now());
+                  // Comparar fecha_hora con hora actual de Colombia
+                  ->where('fecha_hora', '>', Carbon::now(config('app.timezone')));
         })
         ->whereNotIn('id', Apuesta::where('usuario_id', $usuario->id)->pluck('partido_id'))
         ->count();
@@ -165,7 +166,8 @@ class PartidoController extends Controller
             ->where(function ($query) {
                 $query->whereNull('goles_a')->orWhereNull('goles_b');
             })
-            ->where('fecha_hora', '<=', Carbon::now())
+            // Validar partidos pasados con hora actual de Colombia
+            ->where('fecha_hora', '<=', Carbon::now(config('app.timezone')))
             ->count();
 
         return view('partidos.admin', compact('partidos', 'etapas', 'selectedEtapaId', 'equipos', 'matchesToComplete'));
@@ -323,15 +325,15 @@ class PartidoController extends Controller
         foreach ($apuestas as $apuesta) {
             $ptsApuesta = 0;
 
-            if ($apuesta->goles_a !== null && (int) $apuesta->goles_a === (int) $partido->goles_a) {
+            if ($apuesta->goles_a !== null && $apuesta->goles_a == $partido->goles_a) {
                 $ptsApuesta += 1;
             }
 
-            if ($apuesta->goles_b !== null && (int) $apuesta->goles_b === (int) $partido->goles_b) {
+            if ($apuesta->goles_b !== null && $apuesta->goles_b == $partido->goles_b) {
                 $ptsApuesta += 1;
             }
 
-            if ($apuesta->ganador !== null && (int) $apuesta->ganador === $partidoGanador) {
+            if ($apuesta->ganador !== null && $apuesta->ganador == $partidoGanador) {
                 $ptsApuesta += 2;
             }
 

@@ -1,4 +1,4 @@
-# Polla Unicatólica
+# Reto Mundialista
 
 es una página web para que los trabajadores de la universidad Unicatólica en Cali - Colombia jueguen a la polla mundialista, del mundial de fútbol 2026, pero además de adivinar los marcadores, también habrá trivias de preguntas sobre la institución.
 

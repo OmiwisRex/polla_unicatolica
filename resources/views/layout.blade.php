@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Polla Unicatólica')</title>
+    <title>@yield('title', 'Reto Mundialista')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
@@ -12,7 +12,7 @@
         <div class="header-content">
             <div>
                 <img src="{{ asset('img/horizontal colorAmarillo.png') }}" alt="Logo Institución" class="navbar-logo">
-                <div class="logo-subtitle">Polla Mundial 2026 + Trivia Institucional</div>
+                <div class="logo-subtitle">Reto Mundialista 2026 + Trivia Institucional</div>
             </div>
 
             <div class="controls">

@@ -145,7 +145,7 @@
                 <select id="ganador" name="ganador" required>
                     <option value="0" id="ganador_a_option">Equipo A</option>
                     <option value="1" id="ganador_b_option">Equipo B</option>
-                    <option value="2">Empate</option>
+                    <option value="2" selected>Empate</option>
                 </select>
             </div>
 
