@@ -11,8 +11,14 @@
             <tr>
                 <th>Puesto</th>
                 <th class="nombre-column">Nombre</th>
-                <th>Puntos predicciónes</th>
-                <th>Puntos preguntas</th>
+                <th>
+                    <span class="desktop-only">Puntos predicciónes</span>
+                    <span class="mobile-only">pts.<br>Predic.</span>
+                </th>
+                <th>
+                    <span class="desktop-only">Puntos preguntas</span>
+                    <span class="mobile-only">pts.<br>Pregunt.</span>
+                </th>
                 <th>Total</th>
             </tr>
         </thead>

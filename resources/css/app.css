@@ -42,6 +42,12 @@
     --gris-claro:  #777777;
     --gris-blanco: rgb(200, 200, 200);
 
+    /* --- BLOQUE DE BLANCO (Textos y elementos de contraste) --- */
+    --blanco: #ffffff;
+
+    /* --- Bloque de NEGRO (Textos y elementos de contraste) --- */
+    --negro: #000000;
+
     /* --- BLOQUE DE AMARILLOS (Alertas, estados o detalles) --- */
     --amarillo-oscuro: #b08f09;
     --amarillo-medio:  #db9421;

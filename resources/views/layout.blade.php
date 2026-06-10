@@ -37,7 +37,7 @@
                     <span class="tag">{{ auth()->user()->nombre }}</span><br>
                     <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                         @csrf
-                        <button type="submit" class="btn btn-primary">Logout</button>
+                        <button type="submit" class="btn btn-primary">Salir</button>
                     </form>
                 @endguest
             </div>

@@ -1,64 +1,99 @@
-﻿.team-box {
+﻿/* ============================================================
+   partidos.css — Estilos del módulo de Partidos y Clasificación
+   Usado en: vistas de partidos (jugador/admin), clasificación
+             general y modal de predicciones
+   Depende de: las variables de app.css (--azul-*, --amarillo-*, etc.)
+   ============================================================ */
+
+/* ================================================================
+   TARJETA DE EQUIPO — Bandera + nombre de cada equipo
+   ================================================================ */
+.team-box {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .team-flag {
-  font-size: 24px;
+  font-size: 22px;
 }
 
+/* Nombre del equipo — texto azul oscuro sobre fondo claro */
 .team-name {
   display: block;
-  font-size: 15px;
-  color: var(--amarillo-claro);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--azul-oscuro);
 }
 
+/* ================================================================
+   ETIQUETA DE PARTIDO
+   ================================================================ */
 .match-label {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
+/* ================================================================
+   ESTADO DEL PARTIDO — "Pendiente" en amarillo sobre fondo claro
+   ================================================================ */
 .status {
-  color: var(--gris-blanco);
+  color: var(--amarillo-medio);
   font-size: 14px;
-}
-
-.score-pill {
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(247, 194, 33, 0.15);
-  color: var(--amarillo-claro);
   font-weight: bold;
 }
 
+/* ================================================================
+   MARCADOR — Píldora azul sobre fondo claro
+   ================================================================ */
+.score-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(27, 93, 164, 0.1);
+  color: var(--azul-claro);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* ================================================================
+   CAJA DE MÉTRICAS — Avance del torneo
+   ================================================================ */
 .metric-box {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
-  color: var(--amarillo-claro);
+  gap: 10px;
+  color: var(--azul-medio);
   font-weight: bold;
+  font-size: 14px;
 }
 
+/* ================================================================
+   BOTÓN PEQUEÑO — Para usar dentro de tablas
+   ================================================================ */
 .btn-small {
   font-size: 11px;
-  padding: 7px 10px;
+  padding: 7px 12px;
 }
 
-/* Clasificación: columna de nombre de equipo */
+/* ================================================================
+   TABLA DE CLASIFICACIÓN — Columna nombre de equipo
+   ================================================================ */
 .clasificacion-table .nombre-column {
   width: 40%;
   word-wrap: break-word;
 }
 
-/* Selector de etapa y filtros */
+/* ================================================================
+   SELECT — Hereda estilos claros de app.css
+   (aquí se mantiene por si se necesita sobrescribir en partidos)
+   ================================================================ */
 select {
-  background-color: var(--gris-oscuro);
-  color: var(--gris-blanco);
-  border: 2px solid var(--amarillo-medio);
+  background-color: var(--blanco);
+  color: var(--azul-oscuro);
+  border: 2px solid var(--azul-claro);
   border-radius: 6px;
   padding: 10px 12px;
   font-size: 14px;
@@ -66,34 +101,39 @@ select {
 }
 
 select option {
-  background-color: var(--gris-oscuro);
-  color: var(--gris-blanco);
+  background-color: var(--blanco);
+  color: var(--azul-oscuro);
   padding: 8px;
 }
 
 select option:checked {
-  background: linear-gradient(var(--amarillo-oscuro), var(--amarillo-oscuro));
-  color: var(--azul-oscuro);
+  background: linear-gradient(var(--azul-claro), var(--azul-claro));
+  color: var(--blanco);
 }
 
 select:focus {
   outline: none;
-  border-color: var(--amarillo-claro);
-  box-shadow: 0 0 10px rgba(247, 194, 33, 0.25);
+  border-color: var(--azul-medio);
+  box-shadow: 0 0 8px rgba(27, 93, 164, 0.2);
 }
 
-/* Jugador actual en la tabla de clasificación */
+/* ================================================================
+   FILA DEL USUARIO ACTUAL en tabla de clasificación
+   ================================================================ */
 .usuario-actual {
-  background-color: rgba(15, 61, 83, 0.65) !important;
+  background-color: rgba(27, 93, 164, 0.08) !important;
   font-weight: 600 !important;
 }
 
 .usuario-actual td {
-  color: var(--amarillo-claro) !important;
+  color: var(--azul-claro) !important;
   font-weight: bold !important;
 }
 
-/* Fondo del modal de partidos y alertas */
+/* ================================================================
+   MODAL — Ventana emergente para predicciones
+   Mantiene fondo oscuro para máxima legibilidad sobre el overlay
+   ================================================================ */
 .modal {
   position: fixed;
   inset: 0;
@@ -111,7 +151,7 @@ select:focus {
 
 .modal-box {
   position: relative;
-  background: rgba(24, 37, 48, 0.98);
+  background: var(--blanco);
   border: 1px solid var(--amarillo-claro);
   border-radius: 12px;
   padding: 28px;
@@ -127,22 +167,27 @@ select:focus {
   color: var(--amarillo-claro);
 }
 
+/* Etiquetas dentro del modal — texto claro */
 .modal-box .group-form label {
   display: block;
   margin-bottom: 8px;
-  color: var(--gris-blanco);
+  color: var(--negro);
 }
 
+/* Inputs y selects dentro del modal — fondo oscuro */
 .modal-box .group-form input,
 .modal-box .group-form select {
   width: 100%;
-  background: var(--gris-oscuro);
+  background: var(--blanco);
   border: 2px solid var(--amarillo-medio);
   border-radius: 6px;
   padding: 12px;
-  color: var(--gris-blanco);
+  color: var(--gris-claro);
 }
 
+/* ================================================================
+   LISTA DE OPCIONES DE RESPUESTA (quiz en modal)
+   ================================================================ */
 .options-list {
   display: grid;
   gap: 10px;
@@ -157,7 +202,7 @@ select:focus {
   border: 1px solid var(--amarillo-medio);
   border-radius: 10px;
   background: #111111;
-  color: var(--gris-blanco);
+  color: var(--gris-claro);
   cursor: pointer;
 }
 
@@ -184,20 +229,157 @@ select:focus {
   gap: 12px;
 }
 
-/* banderas SVG */
+/* ================================================================
+   BANDERAS SVG — Clases fi de flag-icons
+   ================================================================ */
 .fi {
     width: 24px;
     height: 18px;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-    vertical-align: middle; 
+    vertical-align: middle;
     margin: 0 5px;
 }
 
-/* logo unicatolica */
+/* ================================================================
+   LOGO DE LA NAVBAR
+   ================================================================ */
 .navbar-logo {
     height: auto;
     width: 20vw;
     object-fit: contain;
     padding: 2px 0;
+}
+
+/* ================================================================
+   WRAPPER DE TABLA — Scroll horizontal en móvil
+   ================================================================ */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Controles: flex wrap para select y métrica */
+.controls.controlmax {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    align-items: center;
+}
+
+.controls.controlmax .metric-box {
+    flex-shrink: 0;
+}
+
+/* ================================================================
+   RESPONSIVE MÓVIL — ≤ 640px
+   Técnica: stack-cards (cada fila se convierte en tarjeta)
+   ================================================================ */
+@media (max-width: 640px) {
+
+    /* Ocultar encabezados de tabla */
+    .partidos-table thead {
+        display: none;
+    }
+
+    /* Cada fila se convierte en una tarjeta */
+    .partidos-table,
+    .partidos-table tbody,
+    .partidos-table tr,
+    .partidos-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .partidos-table tr {
+        background: #f5f8fc;
+        border: 1px solid #d0dae6;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        padding: 4px 0;
+        overflow: hidden;
+    }
+
+    .partidos-table tr:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Cada celda muestra su etiqueta a la izquierda */
+    .partidos-table td {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 14px;
+        border-bottom: 1px solid #e8eef4;
+        font-size: 13px;
+        color: var(--azul-oscuro);
+    }
+
+    .partidos-table td:last-child {
+        border-bottom: none;
+    }
+
+    /* Etiqueta generada desde data-label */
+    .partidos-table td::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        width: 90px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--azul-claro);
+        opacity: 0.85;
+    }
+
+    /* El contenido de la celda ocupa el resto */
+    .partidos-table td > * {
+        flex: 1;
+    }
+
+    /* Fila vacía: centrar mensaje */
+    .partidos-table td[colspan] {
+        justify-content: center;
+    }
+
+    .partidos-table td[colspan]::before {
+        display: none;
+    }
+
+    /* Select de ancho completo en móvil */
+    .controls.controlmax > div {
+        width: 100%;
+    }
+
+    .controls.controlmax select {
+        width: 100%;
+    }
+
+    .metric-box {
+        justify-content: flex-start !important;
+        width: 100%;
+    }
+}
+
+/* ================================================================
+   RESPONSIVE TABLET — 641px – 900px
+   Tabla visible con columnas comprimidas
+   ================================================================ */
+@media (min-width: 641px) and (max-width: 900px) {
+
+    .partidos-table th,
+    .partidos-table td {
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+
+    .team-name {
+        font-size: 13px;
+    }
+
+    .score-pill {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
 }

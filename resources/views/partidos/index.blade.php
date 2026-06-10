@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <table>
+    <table class="responsive-table">
         <thead>
             <tr>
                 <th>Etapa</th>
@@ -34,8 +34,8 @@
         <tbody>
             @forelse($partidos as $partido)
                 <tr>
-                    <td>{{ $partido->etapa?->nombre ?? 'Sin etapa' }}</td>
-                    <td>
+                    <td data-label="Etapa">{{ $partido->etapa?->nombre ?? 'Sin etapa' }}</td>
+                    <td data-label="Equipo A">
                         <div class="team-box">
                             @if($partido->equipoA?->bandera)
                                 <span class="team-flag fi fi-{{ $partido->equipoA->bandera }}"></span>
@@ -63,7 +63,7 @@
                             <span class="status">Por definir</span>
                         @endif
                     </td>
-                    <td>
+                    <td data-label="Goles">
                         @if($partido->goles_a !== null && $partido->goles_b !== null)
                             <span class="score-pill">{{ $partido->goles_a }} - {{ $partido->goles_b }}</span>
                         @else

@@ -1,318 +1,399 @@
+/* ---- RESET BÁSICO ----
+   Elimina márgenes y rellenos por defecto que los navegadores
+   aplican a elementos HTML (h1, p, ul, body, etc.) */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0;       /* Sin margen exterior en ningún elemento */
+  padding: 0;      /* Sin relleno interior en ningún elemento */
+  box-sizing: border-box; /* El padding y border se incluyen dentro del ancho/alto declarado,
+                             evita que los elementos "crezcan" inesperadamente */
 }
 
+/* ---- ESTILOS DEL BODY ---- */
 body {
   font-family: 'Myriad Pro', 'Times New Roman', Times, serif;
-  background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%);
-  color: var(--gris-blanco);
+
+  /* ANTES: background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%); */
+
+  /* NUEVO: imagen de fondo responsiva */
+  background-image: 
+    linear-gradient(135deg, rgba(24, 37, 48, 0.82) 0%, rgba(15, 61, 83, 0.78) 100%),
+    url('/img/fondomundial.png');        /* ← ruta desde public/ en Laravel */
+  background-size: cover;               /* cubre toda la pantalla sin deformar */
+  background-position: center center;   /* centrada horizontal y vertical */
+  background-attachment: fixed;         /* el fondo no hace scroll con el contenido */
+  background-repeat: no-repeat;         /* no se repite si la pantalla es muy grande */
+
+  color: var(--gris-oscuro);
   min-height: 100vh;
 }
 
-/* Barra superior y navegación */
+/* ================================================================
+   HEADER — Barra superior de navegación
+   ================================================================ */
 header {
-  background: linear-gradient(135deg, var(--azul-medio) 0%, var(--azul-oscuro) 100%);
-  border-bottom: 3px solid var(--amarillo-medio);
-  padding: 25px 0;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, var(--blanco) 0%);
+  /* Degradado inverso al body para que el header contraste visualmente */
+  border-bottom: 3px solid var(--azul-claro); /* Línea azul inferior que separa el header del contenido */
+  padding: 25px 0;                                /* Espacio vertical interno arriba y abajo */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.726);     /* Sombra suave hacia abajo para dar profundidad */
 }
 
+/* Contenedor interno del header: centra y organiza logo + nav */
 .header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  gap: 16px;
-  flex-wrap: wrap;
+  max-width: 1200px;          /* Ancho máximo para pantallas grandes */
+  margin: 0 auto;             /* Centrado horizontal automático */
+  display: flex;              /* Layout flexible en fila */
+  justify-content: space-between; /* Logo a la izquierda, nav en el centro, botones a la derecha */
+  align-items: center;        /* Alinea verticalmente al centro */
+  padding: 0 20px;            /* Espacio horizontal interno */
+  gap: 16px;                  /* Separación entre los bloques hijos */
+  flex-wrap: wrap;            /* En pantallas pequeñas los elementos bajan a una nueva línea */
 }
 
-/* Identidad de marca */
+/* ---- IDENTIDAD DE MARCA ---- */
 .logo {
-  font-size: 32px;
-  font-weight: bold;
-  color: var(--amarillo-claro);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-size: 32px;            /* Tamaño grande para el nombre principal */
+  font-weight: bold;          /* Negrita */
+  color: var(--amarillo-claro); /* Amarillo brillante (#f7c221) para máxima visibilidad */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra oscura detrás del texto para legibilidad */
 }
 
 .logo-subtitle {
-  font-size: 12px;
-  color: var(--amarillo-medio);
-  font-style: italic;
-  letter-spacing: 2px;
+  font-size: 12px;            /* Texto pequeño, secundario */
+  color: var(--amarillo-medio); /* Amarillo más suave que el logo principal */
+  font-style: italic;         /* En cursiva para diferenciarlo del título */
+  letter-spacing: 2px;        /* Espaciado entre letras para estética de subtítulo */
 }
 
-/* Panel principal de preguntas */
+/* ================================================================
+   CONTENEDOR PRINCIPAL DE PÁGINA
+   Envuelve la tabla o formulario de preguntas
+   ================================================================ */
 .container {
-  max-width: 1200px;
-  margin: 40px auto;
-  background: rgba(15, 61, 83, 0.95);
-  border: 2px solid var(--amarillo-medio);
-  border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  max-width: 1200px;                          /* Limita el ancho en pantallas grandes */
+  margin: 40px auto;                          /* Centrado con margen superior/inferior de 40px */
+  background: rgba(255, 255, 255, 0.95);         /* Fondo azul medio casi opaco (--azul-medio con alpha) */
+  border: 2px solid var(--amarillo-medio);    /* Borde amarillo que enmarca el panel */
+  border-radius: 8px;                         /* Esquinas redondeadas */
+  padding: 30px;                              /* Relleno interno generoso */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6); /* Sombra pronunciada para sensación de "tarjeta flotante" */
 }
 
+/* Título grande de cada página (ej: "Banco de Preguntas") */
 .page-title {
-  font-size: 28px;
-  color: var(--amarillo-claro);
-  margin-bottom: 25px;
-  text-align: center;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-  border-bottom: 2px solid var(--azul-medio);
-  padding-bottom: 15px;
+  font-size: 28px;                            /* Tamaño prominente */
+  color: var(--azul-claro);               /* Amarillo brillante */
+  margin-bottom: 25px;                        /* Espacio debajo antes del contenido */
+  text-align: center;                         /* Centrado horizontalmente */
+  text-shadow: 1px 1px 3px var(--azul-medio); /* Sombra para legibilidad sobre fondos oscuros */
+  border-bottom: 2px solid var(--amarillo-claro); /* Línea divisoria debajo del título */
+  padding-bottom: 15px;                       /* Espacio entre el texto y la línea */
 }
 
-/* Panel de filtros y acciones */
+/* ================================================================
+   BARRA DE CONTROLES / FILTROS
+   Panel superior con botones de acción y filtros
+   ================================================================ */
 .controls {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 25px;
-  align-items: center;
-  flex-wrap: wrap;
-  background: rgba(15, 61, 83, 0.55);
-  padding: 15px;
-  border-radius: 6px;
-  border-left: 3px solid var(--amarillo-medio);
+  display: flex;              /* Elementos en fila */
+  gap: 15px;                  /* Separación entre botones/controles */
+  margin-bottom: 25px;        /* Espacio debajo antes de la tabla */
+  align-items: center;        /* Alineación vertical centrada */
+  flex-wrap: wrap;            /* Permite salto de línea en pantallas pequeñas */
+  background: rgba(255, 255, 255, 0.55); /* Fondo semitransparente azul para distinguir el panel */
+  padding: 15px;              /* Relleno interno */
+  border-radius: 6px;         /* Bordes ligeramente redondeados */
+  border-left: 3px solid var(--azul-claro); /* Acento azul en el borde izquierdo */
 }
+
+/* Modificador que hace el panel de controles de ancho completo
+   y distribuye sus hijos en los extremos (izquierda y derecha) */
 .controlmax {
-  justify-content: space-between;
-  width: 100%;
+  justify-content: space-between; /* Primer hijo a la izquierda, último a la derecha */
+  width: 100%;                    /* Ocupa todo el ancho del contenedor padre */
 }
 
+/* Texto dentro del panel de controles (ej: "5 preguntas activas") */
 .controls span {
-  color: var(--amarillo-medio);
-  font-weight: bold;
+  color: var(--amarillo-medio); /* Amarillo medio para destacar sin ser tan brillante */
+  font-weight: bold;            /* Negrita para que sea fácil de leer */
 }
 
-/* Botones de acción principal */
+/* ================================================================
+   BOTONES — Sistema de botones reutilizables
+   ================================================================ */
 .btn {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 12px;
-  font-family: 'Myriad Pro', 'Times New Roman', Times, serif;
+  padding: 10px 18px;           /* Relleno interno: 10px arriba/abajo, 18px izquierda/derecha */
+  border: none;                 /* Sin borde (el estilo viene del fondo) */
+  border-radius: 4px;           /* Bordes ligeramente redondeados */
+  font-weight: bold;            /* Texto en negrita */
+  cursor: pointer;              /* Cursor de mano al pasar el ratón */
+  transition: all 0.3s ease;   /* Transición suave de 0.3s para efectos hover */
+  text-transform: uppercase;    /* Texto siempre en mayúsculas */
+  letter-spacing: 1px;          /* Espaciado entre letras para estética de botón */
+  font-size: 12px;              /* Tamaño pequeño, limpio */
+  font-family: 'Myriad Pro', 'Times New Roman', Times, serif; /* Hereda la fuente del proyecto */
 }
 
+/* Botón primario: fondo amarillo, texto azul oscuro (acción principal) */
 .btn-primary {
-  background: linear-gradient(135deg, var(--amarillo-claro) 0%, var(--amarillo-medio) 100%);
-  color: var(--azul-oscuro);
-  box-shadow: 0 4px 8px rgba(247, 194, 33, 0.3);
+  background: linear-gradient(135deg, var(--amarillo-claro));
+  /* Degradado de amarillo brillante a amarillo medio */
+  color: var(--azul-oscuro);                      /* Texto azul oscuro sobre fondo amarillo */
+  box-shadow: 0 4px 8px rgba(247, 194, 33, 0.3); /* Sombra amarilla difusa */
 }
 
+/* Efecto hover del botón primario (solo cuando no está deshabilitado) */
 .btn-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(247, 194, 33, 0.5);
+  transform: translateY(-2px);                    /* Sube 2px simulando que "flota" */
+  box-shadow: 0 6px 12px rgb(255, 191, 0); /* Sombra más intensa al hacer hover */
 }
-
+/* sombras */
+/* Botón secundario: fondo azul, texto amarillo (acciones secundarias) */
 .btn-secondary {
-  background: linear-gradient(135deg, var(--azul-medio) 0%, var(--azul-claro) 100%);
-  color: var(--amarillo-claro);
-  box-shadow: 0 4px 8px rgba(15, 61, 83, 0.3);
+  background: linear-gradient(135deg, var(--azul-medio) 0%, var(--azul-medio) 120%);
+  /* Degradado de azul medio a azul claro */
+  color: var(--amarillo-claro);                   /* Texto amarillo sobre fondo azul */
+  box-shadow: 0 4px 8px var(--azul-claro);   /* Sombra azul difusa */
 }
 
+/* Efecto hover del botón secundario */
 .btn-secondary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(15, 61, 83, 0.5);
+  transform: translateY(-2px);                    /* Mismo efecto de flotación */
+  box-shadow: 0 6px 12px rgb(0, 174, 255);  /* Sombra más intensa */
 }
 
+/* Estado deshabilitado: gris neutro, sin interacción */
 .btn:disabled {
-  background: var(--gris-oscuro);
-  color: var(--gris-blanco);
-  cursor: not-allowed;
-  opacity: 0.6;
+  background: var(--gris-oscuro); /* Fondo gris oscuro para indicar inactividad */
+  color: var(--gris-blanco);      /* Texto gris claro */
+  cursor: not-allowed;            /* Cursor de "prohibido" */
+  opacity: 0.6;                   /* Semitransparente para reforzar el estado inactivo */
 }
 
+/* Modificador de botón para usarse como enlace de navegación (más grande) */
 .btn-nav {
-  display: inline-block;
-  padding: 12px 30px;
-  font-size: 14px;
+  display: inline-block; /* Permite aplicar padding como bloque dentro de un <a> */
+  padding: 12px 30px;    /* Más ancho y alto que el botón estándar */
+  font-size: 14px;       /* Ligeramente más grande */
 }
 
-/* Tabla de preguntas */
+/* ================================================================
+   TABLA DE PREGUNTAS
+   ================================================================ */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  background: var(--azul-oscuro);
-  border: 1px solid var(--amarillo-medio);
-  border-radius: 6px;
-  overflow: hidden;
+  width: 100%;               /* Ocupa todo el ancho del contenedor */
+  border-collapse: collapse; /* Elimina el espacio doble entre bordes de celdas */
+  margin: 20px 0;            /* Margen vertical para separar de otros elementos */
+  background: var(--blanco); /* Fondo azul oscuro para las filas */
+  border: 1px solid var(--azul-claro); /* Borde exterior amarillo */
+  border-radius: 6px;        /* Esquinas redondeadas (visible gracias al overflow:hidden) */
+  overflow: hidden;          /* Recorta el contenido para que respete el border-radius */
 }
 
+/* Encabezado de tabla: fondo amarillo degradado */
 thead {
-  background: linear-gradient(135deg, var(--amarillo-oscuro) 0%, var(--amarillo-medio) 100%);
-  color: var(--azul-oscuro);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, var(--azul-claro));
+  /* De amarillo oscuro a amarillo medio: fondo llamativo para los títulos de columna */
+  color: var(--blanco);                    /* Texto azul oscuro sobre fondo amarillo */
+  text-shadow: 1px 1px 2px rgb(31, 113, 134); /* Sombra sutil para mejor legibilidad */
 }
 
+/* Celda de encabezado */
 th {
-  padding: 15px;
-  text-align: left;
-  font-weight: bold;
-  border-right: 1px solid var(--azul-medio);
+  padding: 15px;             /* Relleno generoso */
+  text-align: left;          /* Texto alineado a la izquierda */
+  font-weight: bold;         /* Negrita */
+  border-right: 1px solid var(--azul-medio); /* Separador vertical entre columnas */
 }
 
+/* Elimina el separador en la última columna del encabezado */
 th:last-child {
   border-right: none;
 }
 
+/* Celda de datos */
 td {
-  padding: 12px 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--gris-blanco);
-  vertical-align: top;
+  padding: 12px 15px;        /* Relleno interno de celdas */
+  border-bottom: 1px solid rgba(61, 61, 61, 0.08); /* Línea divisoria entre filas muy sutil */
+  color: var(--negro); /* Texto gris claro */
+  vertical-align: top;       /* Contenido alineado arriba (útil cuando hay texto largo) */
 }
 
+/* Resaltado sutil al pasar el cursor sobre una fila */
 tbody tr:hover {
-  background: rgba(247, 194, 33, 0.1);
+  background: rgba(247, 194, 33, 0.1); /* Tinte amarillo muy transparente */
 }
 
+/* Muestra la respuesta correcta debajo del enunciado en la tabla */
 .answer {
-  margin-top: 8px;
-  color: var(--gris-blanco);
-  font-size: 14px;
+  margin-top: 8px;           /* Separación del enunciado */
+  color: var(--gris-claro); /* Texto gris claro */
+  font-size: 14px;           /* Ligeramente más pequeño que el enunciado */
 }
 
+/* Formulario inline dentro de una celda (usado para el botón Eliminar) */
 .inline-form {
-  display: inline-block;
-  margin-left: 10px;
+  display: inline-block; /* Permite que el form fluya junto al botón Editar en la misma línea */
+  margin-left: 10px;     /* Separación del elemento anterior */
 }
 
+/* Mensaje cuando no hay preguntas en la tabla */
 .no-data {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--gris-blanco);
-  font-size: 16px;
+  text-align: center;    /* Centrado */
+  padding: 40px 20px;    /* Espacio generoso para que no quede apretado */
+  color: var(--gris-blanco); /* Texto gris claro */
+  font-size: 16px;       /* Tamaño legible */
 }
 
-/* Tarjeta de formulario de preguntas */
+/* ================================================================
+   TARJETA DE FORMULARIO (Crear / Editar pregunta)
+   ================================================================ */
 .form-card {
-  background: rgba(15, 61, 83, 0.95);
-  border: 1px solid var(--amarillo-medio);
-  border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
-  max-width: 900px;
-  margin: 0 auto;
+  background: var(--blanco);         /* Fondo azul medio casi opaco */
+  border: 1px solid var(--blanco);    /* Borde amarillo */
+  border-radius: 8px;                         /* Esquinas redondeadas */
+  padding: 30px;                              /* Relleno interno generoso */
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45); /* Sombra profunda */
+  max-width: 900px;                           /* No crece más de 900px */
+  margin: 0 auto;                             /* Centrado horizontal */
 }
 
+/* Grupo de campo de formulario (label + input/textarea) */
 .group-form {
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Separación entre grupos de campos */
 }
 
+/* Etiqueta del campo */
 .group-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: var(--amarillo-claro);
+  display: block;               /* Ocupa su propia línea */
+  margin-bottom: 8px;           /* Espacio entre la etiqueta y el input */
+  font-weight: bold;            /* Negrita */
+  color: var(--gris-oscuro); /* Amarillo brillante para destacar */
 }
 
+/* Inputs de texto y textareas del formulario */
 .group-form textarea,
 .group-form input {
-  width: 100%;
-  min-height: 50px;
-  border-radius: 6px;
-  border: 2px solid var(--amarillo-medio);
-  background: var(--gris-oscuro);
-  color: var(--gris-blanco);
-  padding: 12px 14px;
-  resize: vertical;
-  font-family: inherit;
-  font-size: 14px;
+  width: 100%;                           /* Ocupa todo el ancho disponible */
+  min-height: 50px;                      /* Altura mínima para inputs de texto */
+  border-radius: 6px;                    /* Bordes redondeados */
+  border: 2px solid var(--amarillo-medio); /* Borde amarillo medio */
+  background: var(--blanco);        /* Fondo oscuro (#333333) */
+  color: var(--gris-oscuro);             /* Texto gris claro */
+  padding: 12px 14px;                    /* Relleno interno */
+  resize: vertical;                      /* Solo permite redimensionar verticalmente */
+  font-family: inherit;                  /* Hereda la fuente del body */
+  font-size: 14px;                       /* Tamaño legible */
 }
 
+/* El textarea tiene más altura mínima que un input normal */
 .group-form textarea {
   min-height: 100px;
 }
 
+/* Estado focus: cuando el usuario hace clic en el campo */
 .group-form input:focus,
 .group-form textarea:focus {
-  outline: none;
-  border-color: var(--amarillo-claro);
-  box-shadow: 0 0 10px rgba(247, 194, 33, 0.25);
+  outline: none;                                      /* Elimina el borde azul nativo del navegador */
+  border-color: var(--amarillo-claro);                /* Borde cambia a amarillo brillante */
+  box-shadow: 0 0 10px rgb(255, 191, 0);     /* Halo amarillo suave alrededor del campo */
 }
 
+/* Contenedor de botones al pie del formulario */
 .actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-top: 20px;
+  display: flex;              /* En fila */
+  justify-content: space-between; /* Un botón a cada extremo */
+  gap: 15px;                  /* Separación entre botones */
+  flex-wrap: wrap;            /* Bajan de línea en pantallas pequeñas */
+  margin-top: 20px;           /* Separación del último campo */
 }
 
+/* ================================================================
+   ALERTAS DE ESTADO
+   ================================================================ */
+
+/* Alerta de éxito (ej: "Pregunta guardada correctamente") */
 .alert-success,
 .alert-danger {
-  padding: 14px 18px;
-  border-radius: 6px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(247, 194, 33, 0.4);
+  padding: 14px 18px;         /* Relleno interno cómodo */
+  border-radius: 6px;         /* Bordes redondeados */
+  margin-bottom: 20px;        /* Espacio debajo antes del contenido */
+  border: 1px solid rgba(247, 194, 33, 0.4); /* Borde amarillo semitransparente */
 }
 
 .alert-success {
-  background: rgba(247, 194, 33, 0.15);
-  color: #f9f1d1;
+  background: rgba(247, 194, 33, 0.15); /* Fondo amarillo muy suave */
+  color: #f9f1d1;                        /* Texto crema cálido legible sobre el fondo */
 }
 
+/* Alerta de error (ej: "No se pudo eliminar la pregunta") */
 .alert-danger {
-  background: rgba(170, 50, 50, 0.15);
-  color: #ffd6d6;
+  background: rgba(170, 50, 50, 0.15); /* Fondo rojo muy suave */
+  color: #ffd6d6;                       /* Texto rosado suave sobre fondo rojo */
 }
 
+/* Lista de errores de validación de formulario Laravel */
 .validation-errors {
-  background: rgba(170, 50, 50, 0.15);
-  color: #ffd6d6;
-  border: 1px solid rgba(170, 50, 50, 0.4);
+  background: rgba(170, 50, 50, 0.15); /* Fondo rojo igual que alert-danger */
+  color: #ffd6d6;                       /* Texto rosado */
+  border: 1px solid rgba(170, 50, 50, 0.4); /* Borde rojo semitransparente */
   padding: 14px 18px;
   border-radius: 6px;
   margin-bottom: 20px;
 }
 
+/* ================================================================
+   CELDA DE ACCIONES EN LA TABLA (Editar / Eliminar)
+   ================================================================ */
 .actions-cell {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    align-items: center;
-    border: none !important;
+    display: flex;           /* Los botones se alinean en fila */
+    gap: 8px;                /* Separación entre botones */
+    justify-content: center; /* Centrados horizontalmente en la celda */
+    align-items: center;     /* Centrados verticalmente */
+    border: none !important; /* Elimina el borde de celda que heredaría del td */
 }
 
+/* El form de eliminar dentro de la celda de acciones no agrega espacios extra */
 .actions-cell form {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
+    margin: 0;               /* Sin margen */
+    padding: 0;              /* Sin relleno */
+    display: flex;           /* Para que el botón quede bien alineado */
+    align-items: center;     /* Alineación vertical del botón */
 }
 
+/* ================================================================
+   RESPONSIVE — Adaptaciones para pantallas menores a 768px
+   ================================================================ */
 @media (max-width: 768px) {
+
+  /* Reduce el padding del contenedor en móvil */
   .container {
     padding: 20px;
   }
 
+  /* Texto de tabla más pequeño en móvil para que quepa */
   table {
     font-size: 12px;
   }
 
+  /* Celdas con menos padding en móvil */
   th, td {
     padding: 10px;
   }
 
+  /* Título de página más pequeño en móvil */
   .page-title {
     font-size: 22px;
   }
 
+  /* Los controles apilan en columna (uno debajo del otro) en móvil */
   .controls {
     flex-direction: column;
-    align-items: stretch;
+    align-items: stretch; /* Cada hijo ocupa todo el ancho disponible */
   }
 
+  /* Los botones son de ancho completo en móvil para fácil toque */
   .btn {
     width: 100%;
   }

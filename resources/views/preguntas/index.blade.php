@@ -35,7 +35,7 @@
                             <strong>{{ $pregunta->enunciado }}</strong>
                             <div class="answer">R: {{ $pregunta->correcta }}</div>
                         </td>
-                        <td class="actions-cell"d>
+                        <td class="actions-cell">
                             <a href="{{ route('preguntas.edit', $pregunta) }}" class="btn btn-secondary">Editar</a>
                             <form action="{{ route('preguntas.destroy', $pregunta) }}" method="POST" class="inline-form">
                                 @csrf

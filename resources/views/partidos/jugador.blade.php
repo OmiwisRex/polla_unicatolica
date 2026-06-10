@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <table>
+    <table class="responsive-table">
         <thead>
             <tr>
                 <th>Etapa</th>
@@ -47,8 +47,8 @@
                     $puedeApostar = $partido->equipo_a_id && $partido->equipo_b_id && $partido->fecha_hora && $partido->fecha_hora->isFuture() && !$apuesta;
                 @endphp
                 <tr>
-                    <td>{{ $partido->etapa?->nombre ?? 'Sin etapa' }}</td>
-                    <td>
+                    <td data-label="Etapa">{{ $partido->etapa?->nombre ?? 'Sin etapa' }}</td>
+                    <td data-label="Equipo A">
                         <div class="team-box">
                             @if($partido->equipoA?->bandera)
                                 <span class="team-flag fi fi-{{ $partido->equipoA->bandera }}"></span>
@@ -76,14 +76,14 @@
                             <span class="status">Por definir</span>
                         @endif
                     </td>
-                    <td>
+                    <td data-label="Goles">
                         @if($partido->goles_a !== null && $partido->goles_b !== null)
                             <span class="score-pill">{{ $partido->goles_a }} - {{ $partido->goles_b }}</span>
                         @else
                             <span class="status">Pendiente</span>
                         @endif
                     </td>
-                    <td>
+                    <td data-label="Predicciónes">
                         @if($apuesta && $apuesta->goles_a !== null && $apuesta->goles_b !== null)
                             @php
                                 $ganadorApuesta = '';

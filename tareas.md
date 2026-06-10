@@ -2,10 +2,9 @@
 
 Frontend:
 
-- cambiar la paleta de colores.
-- agregar imágen de fondo alusiva al fútbol.
-- hacer el diseño responsivo.
+- revisar que los colores y estilos funciónen bién en el responsive
+- rediseñar el fondo del header, está muy blanco
 
 Backend:
 
-- admin no está pudiendo editar partido, al pulsar guardar cambios sale página no encontrada.
+- nada

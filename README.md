@@ -14,11 +14,11 @@ es una página web para que los trabajadores de la universidad Unicatólica en C
 
 - en inicio cualquier persona puede crear un registro, usando su cédula como ID único, pero aún no tendrá permisos para nada ni se verá en la tabla de jugadores, al logearse así verá solo la información que le dice, por favor diríjase a X lugar para que el administrador reciba su dinero y le de ingreso.
 
-- una vez el administrador le ha dado ingreso, podrá logearse y también cerrar sesión.
+- podrá hacer login y logout, además una vez el administrador le ha dado ingreso, podrá interactuar con el sistema.
 
-- cuando un partido tenga los dos equipos enfrentados ya definidos y la fecha y hora de inicio del juego aún no ha pasado, el jugador puede ingresar su adivinación de cuántos goles hará cada equipo.
+- cuando un partido tenga los dos equipos enfrentados ya definidos y la fecha y hora de inicio del juego aún no ha pasado, el jugador puede ingresar su adivinación de cuántos goles hará cada equipo, y qué equipo ganará (dos tipos diferentes de adivinación).
 
-- cuando elija la adivinación de goles, podrá también responder una pregunta de trivia, esta se elige al azar de un banco, sin poder repetirse para el jugador, además la pregunta queda guardada en apuestas, por si se cierra el forms antes de contestar, la pregunta elegida queda a la espera.
+- cuando elija la adivinación, podrá también responder una pregunta de trivia, esta se elige al azar de un banco, sin poder repetirse para el jugador, además la pregunta queda guardada en apuestas, por si se cierra el forms antes de contestar, la pregunta elegida queda a la espera.
 
 - cuando se cargue la información de los partidos, podrá ver para cada uno cuántos puntos ha ganado tanto por adivinar ganador + marcador, como puntos de trivia.
 
@@ -26,17 +26,17 @@ es una página web para que los trabajadores de la universidad Unicatólica en C
 
 ### Administrador
 
-- acceder a su cuenta vía login, se supone el registro se hará quemando datos directamente desde desarrollo, también podrá hacer logout.
+- acceder a su cuenta vía login, se supone el primer usuario registrado será automáticamente administrador, para otros toca modificar la DB manualmente, también podrá hacer logout.
 
-- dado que los partidos ya están quemados en la DB mediante seeds, el admin solo puede hacer update, nada de crear o eliminar, puede entonces actualizar a los dos equipos encontrados, la fecha_hora de juego y los goles hechos una vez el partido acabe.
+- dado que los partidos ya están quemados en la DB mediante seeds, el admin solo puede hacer update, nada de crear o eliminar, puede entonces actualizar a los dos equipos encontrados (excepto en la fase inicial de grupos), la fecha_hora de juego y los goles hechos una vez el partido acabe.
 
-- podrá hacer el CRUD de preguntas, para llenar el banco de preguntas (tabla).
+- podrá hacer el CRUD de preguntas, para llenar el banco de preguntas (tabla),pero no pueden ser eliminadas si ya un usuario las respondió, además la eliminación es por cambio de estado, nada de delete.
 
 - puede buscar jugadores por número de cédula y ver sus permisos, desde ahí puede ejecutar updates de sus nombres, claves (contraseña) y cambiar el permiso entre ninguno y jugador, este cambio a permiso de jugador lo haría cuando reciba el dinero en mano.
 
 ## Layout
 
-todas las vistas incluyen un header, con el título de la página a la izquierda (click para recargar), información de login a la derecha (botón de login, o nombre de usuario y botón de logout), y en el centro botónes contextuales para ir a diferentes vistas disponibles.
+todas las vistas incluyen un header, con el título de la página a la izquierda, información de login a la derecha (botón de login, o nombre de usuario y botón de logout), y en el centro botónes contextuales para ir a diferentes vistas disponibles.
 
 ## Vistas
 
