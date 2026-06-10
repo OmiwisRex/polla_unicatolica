@@ -95,13 +95,18 @@ para armar el proyecto luego de clonarlo del repositorio:
 1. composer install
 2. copy .env.example .env
 3. php artisan key:generate
-4. configurar DB en .env
+4. (configurar DB en .env)
 5. php artisan migrate:fresh --seed
 6. npm install
 7. npm install flag-icons
-8. npm run dev
+8. npm run build
 9. php artisan config:clear
-9. php artisan route:clear
-9. php artisan view:clear
-9. php artisan cache:clear
-10. php artisan serve
+10. php artisan route:clear
+11. php artisan view:clear
+12. php artisan cache:clear
+
+para activar el servidor local y auto carga de recursos:
+
+1. php artisan serve
+2. (en vite.config.js colocar la IP del PC en host o 127.0.0.1)
+3. npm run dev

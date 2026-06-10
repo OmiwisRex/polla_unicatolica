@@ -21,7 +21,7 @@
 }
 
 .status {
-  color: var(--gris-claro);
+  color: var(--gris-blanco);
   font-size: 14px;
 }
 
@@ -29,7 +29,7 @@
   display: inline-block;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(212, 175, 55, 0.15);
+  background: rgba(247, 194, 33, 0.15);
   color: var(--amarillo-claro);
   font-weight: bold;
 }
@@ -48,17 +48,17 @@
   padding: 7px 10px;
 }
 
-/* Expandir columna nombre en clasificación */
+/* Clasificación: columna de nombre de equipo */
 .clasificacion-table .nombre-column {
   width: 40%;
   word-wrap: break-word;
 }
 
-/* Mejorar CSS del selector de etapa */
+/* Selector de etapa y filtros */
 select {
   background-color: var(--gris-oscuro);
-  color: #e8e8e8;
-  border: 2px solid #5c471c;
+  color: var(--gris-blanco);
+  border: 2px solid var(--amarillo-medio);
   border-radius: 6px;
   padding: 10px 12px;
   font-size: 14px;
@@ -67,24 +67,24 @@ select {
 
 select option {
   background-color: var(--gris-oscuro);
-  color: #8a8a8a;
+  color: var(--gris-blanco);
   padding: 8px;
 }
 
 select option:checked {
-  background: linear-gradient(#5c471c, #5c471c);
-  color: var(--amarillo-claro);
+  background: linear-gradient(var(--amarillo-oscuro), var(--amarillo-oscuro));
+  color: var(--azul-oscuro);
 }
 
 select:focus {
   outline: none;
   border-color: var(--amarillo-claro);
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 0 10px rgba(247, 194, 33, 0.25);
 }
 
-/* Mejorar CSS de clasificación para jugador actual */
+/* Jugador actual en la tabla de clasificación */
 .usuario-actual {
-  background-color: #4a4a2a !important;
+  background-color: rgba(15, 61, 83, 0.65) !important;
   font-weight: 600 !important;
 }
 
@@ -93,6 +93,7 @@ select:focus {
   font-weight: bold !important;
 }
 
+/* Fondo del modal de partidos y alertas */
 .modal {
   position: fixed;
   inset: 0;
@@ -110,7 +111,7 @@ select:focus {
 
 .modal-box {
   position: relative;
-  background: rgba(30, 30, 30, 0.98);
+  background: rgba(24, 37, 48, 0.98);
   border: 1px solid var(--amarillo-claro);
   border-radius: 12px;
   padding: 28px;
@@ -129,17 +130,17 @@ select:focus {
 .modal-box .group-form label {
   display: block;
   margin-bottom: 8px;
-  color: #e8e8e8;
+  color: var(--gris-blanco);
 }
 
 .modal-box .group-form input,
 .modal-box .group-form select {
   width: 100%;
-  background: #1f1f1f;
-  border: 2px solid #5c471c;
+  background: var(--gris-oscuro);
+  border: 2px solid var(--amarillo-medio);
   border-radius: 6px;
   padding: 12px;
-  color: #e8e8e8;
+  color: var(--gris-blanco);
 }
 
 .options-list {
@@ -153,10 +154,10 @@ select:focus {
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border: 1px solid #5c471c;
+  border: 1px solid var(--amarillo-medio);
   border-radius: 10px;
   background: #111111;
-  color: #e8e8e8;
+  color: var(--gris-blanco);
   cursor: pointer;
 }
 
@@ -172,7 +173,7 @@ select:focus {
 }
 
 .question-text {
-  color: #e8e8e8;
+  color: var(--gris-blanco);
   margin-top: 8px;
 }
 
@@ -196,7 +197,7 @@ select:focus {
 /* logo unicatolica */
 .navbar-logo {
     height: auto;
-    width: 30vw;
+    width: 20vw;
     object-fit: contain;
     padding: 2px 0;
 }

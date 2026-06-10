@@ -40,6 +40,7 @@
     /* --- BLOQUE DE GRISES (Fondos, tarjetas y textos) --- */
     --gris-oscuro: #333333;
     --gris-claro:  #777777;
+    --gris-blanco: rgb(200, 200, 200);
 
     /* --- BLOQUE DE AMARILLOS (Alertas, estados o detalles) --- */
     --amarillo-oscuro: #b08f09;
