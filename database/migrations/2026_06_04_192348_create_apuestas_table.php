@@ -24,6 +24,8 @@ return new class extends Migration
             $table->tinyInteger('ganador')->nullable();
             $table->tinyInteger('pts_pregunta')->nullable();
             $table->tinyInteger('pts_apuesta')->nullable();
+            $table->string('respuesta_str', 1024)->default('');
+            $table->tinyInteger('respuesta')->nullable();
         });
     }
 

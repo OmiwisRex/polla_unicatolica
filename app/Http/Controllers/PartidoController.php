@@ -224,10 +224,10 @@ class PartidoController extends Controller
         $apuesta->load(['pregunta', 'partido.equipoA', 'partido.equipoB']);
 
         $opciones = [
-            ['id' => 0, 'texto' => $apuesta->pregunta->correcta, 'correcta' => true],
-            ['id' => 1, 'texto' => $apuesta->pregunta->falsa1, 'correcta' => false],
-            ['id' => 2, 'texto' => $apuesta->pregunta->falsa2, 'correcta' => false],
-            ['id' => 3, 'texto' => $apuesta->pregunta->falsa3, 'correcta' => false],
+            ['id' => 0, 'texto' => $apuesta->pregunta->correcta],
+            ['id' => 1, 'texto' => $apuesta->pregunta->falsa1],
+            ['id' => 2, 'texto' => $apuesta->pregunta->falsa2],
+            ['id' => 3, 'texto' => $apuesta->pregunta->falsa3],
         ];
 
         return response()->json([
@@ -236,8 +236,7 @@ class PartidoController extends Controller
             'equipo_b' => $partido->equipoB?->nombre ?? 'Equipo B',
             'pregunta' => [
                 'enunciado' => $apuesta->pregunta->enunciado,
-                'opciones' => $opciones,
-                'correct_index' => 0,
+                'opciones' => $opciones
             ],
         ]);
     }
@@ -268,13 +267,24 @@ class PartidoController extends Controller
 
         $apuesta->load('pregunta');
 
-        $ptsPregunta = (int) $request->respuesta === 0 ? 2 : 0;
+        $opcionesOriginales = [
+            0 => $apuesta->pregunta->correcta,
+            1 => $apuesta->pregunta->falsa1,
+            2 => $apuesta->pregunta->falsa2,
+            3 => $apuesta->pregunta->falsa3,
+        ];
+
+        $indiceSeleccionado = (int) $request->respuesta;
+        $respuesta_str = $opcionesOriginales[$indiceSeleccionado] ?? '';
+        $ptsPregunta = $respuesta_str === $apuesta->pregunta->correcta ? 2 : 0;
 
         $apuesta->update([
             'goles_a' => (int) $request->goles_a,
             'goles_b' => (int) $request->goles_b,
             'ganador' => (int) $request->ganador,
             'pts_pregunta' => $ptsPregunta,
+            'respuesta_str' => $respuesta_str,
+            'respuesta' => $indiceSeleccionado
         ]);
 
         $this->actualizarPuntosPreguntasUsuario($usuario);

@@ -17,7 +17,9 @@ class Apuesta extends Model
         'goles_b', 
         'ganador',
         'pts_pregunta',
-        'pts_apuesta'
+        'pts_apuesta',
+        'respuesta_str',
+        'respuesta'
     ];
 
     // Relaciones de cruce para saber qué se apostó y quién lo hizo

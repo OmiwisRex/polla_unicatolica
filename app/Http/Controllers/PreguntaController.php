@@ -11,7 +11,7 @@ class PreguntaController extends Controller
 {
     public function index()
     {
-        $preguntas = Pregunta::where('estado', '!=', 2)->get();
+        $preguntas = Pregunta::where('estado', '!=', 2)->orderByDesc('id')->get();
         return view('preguntas.index', compact('preguntas'));
     }
 
