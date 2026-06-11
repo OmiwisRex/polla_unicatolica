@@ -2,9 +2,9 @@
 
 Frontend:
 
-- revisar que los colores y estilos funciónen bién en el responsive
-- rediseñar el fondo del header, está muy blanco
+- agregar información de administración y reestablecer contraseña en login.
 
 Backend:
 
-- nada
+- debajo de buscar jugador debe aparecer el listado de cédulas y nombres, jugadores activos y luego jugadores sin permisos (no administradores).
+- agregar en filtros, un filtro de adivinaciónes pendientes o en admin sería marcador por poner.

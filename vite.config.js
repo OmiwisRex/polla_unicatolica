@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+    base: '/Reto_Mundialista/public/',
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
@@ -14,7 +15,7 @@ export default defineConfig({
         host: '0.0.0.0',
         port: 5173,
         hmr: {
-            host: '127.0.0.1', // poner la IP local para trabajo en LAN con otro PC usando npm run dev
+            host: '127.0.0.1',
         },
     },
 });

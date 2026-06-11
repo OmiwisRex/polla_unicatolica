@@ -83,6 +83,7 @@ todas las vistas incluyen un header, con el título de la página a la izquierda
 ## Páginas web
 
 - https://flagicons.lipis.dev/ banderas del mundo en SVG con su CSS
+- https://proyectos.unicatolica.edu.co/Reto_Mundialista/public/ web oficial
 
 ## License
 
@@ -120,18 +121,26 @@ para armar el proyecto luego de clonarlo del repositorio:
 1. composer install
 2. copy .env.example .env
 3. php artisan key:generate
-4. (configurar DB en .env)
-5. php artisan migrate:fresh --seed
-6. npm install
-7. npm install flag-icons
-8. npm run build
-9. php artisan config:clear
-10. php artisan route:clear
-11. php artisan view:clear
-12. php artisan cache:clear
+4. (configurar credenciales de DB en .env)
+5. (configurar APP_URL y ASSET_URL en .env)
+6. php artisan migrate:fresh --seed
+7. npm install
+8. npm install flag-icons
+9. (configurar "base:..." en vite.config.js)
+10. npm run build
+11. php artisan config:clear
+12. php artisan route:clear
+13. php artisan view:clear
+14. php artisan cache:clear
+
+consideraciónes:
+
+- APP_URL=http://localhost y ASSET_URL comentado para funcionamiento local
+- la línea "base:..." de vite.config.js se puede comentar para funcionamiento local
+- las configuraciónes APP_URL, ASSET_URL, base:... tienen texto para despliegue referente a la url del servidor (ver link)
 
 para activar el servidor local y auto carga de recursos:
 
 1. php artisan serve
-2. (en vite.config.js colocar la IP del PC en host o 127.0.0.1)
+2. (en vite.config.js hmr-host será 127.0.0.1 o la propia IP LAN si se quiere conexión remota Live Share para usar bien el run dev)
 3. npm run dev
