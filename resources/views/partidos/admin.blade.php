@@ -10,7 +10,7 @@
         <div class="alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="controls controlmax">
+    <div class="control controlmax">
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.admin') }}">

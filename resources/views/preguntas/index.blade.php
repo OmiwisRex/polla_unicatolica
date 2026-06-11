@@ -13,7 +13,7 @@
         <div class="alert-danger">{{ session('error') }}</div>
     @endif
 
-    <div class="controls controlmax">
+    <div class="control controlmax">
         <a href="{{ route('preguntas.create') }}" class="btn btn-primary btn-nav">Nueva pregunta</a>
         <span>{{ $preguntas->count() }} pregunta{{ $preguntas->count() === 1 ? '' : 's' }} activa{{ $preguntas->count() === 1 ? '' : 's' }}</span>
     </div>

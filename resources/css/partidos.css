@@ -108,7 +108,7 @@ select option {
 
 select option:checked {
   background: linear-gradient(var(--azul-claro), var(--azul-claro));
-  color: var(--blanco);
+  color: var(--negroo);
 }
 
 select:focus {
@@ -182,7 +182,7 @@ select:focus {
   border: 2px solid var(--amarillo-medio);
   border-radius: 6px;
   padding: 12px;
-  color: var(--gris-claro);
+  color: var(--negro);
 }
 
 /* ================================================================
@@ -201,8 +201,8 @@ select:focus {
   padding: 12px 14px;
   border: 1px solid var(--amarillo-medio);
   border-radius: 10px;
-  background: #111111;
-  color: var(--gris-claro);
+  background: var(--blanco);
+  color: var(--negro);
   cursor: pointer;
 }
 
@@ -218,7 +218,7 @@ select:focus {
 }
 
 .question-text {
-  color: var(--gris-blanco);
+  color: var(--negro-medio);
   margin-top: 8px;
 }
 
@@ -250,7 +250,12 @@ select:focus {
     object-fit: contain;
     padding: 2px 0;
 }
-
+.tag{
+  color: var(--blanco);
+  
+  font-size: 1.25rem;    /* Ajusta este valor a tu gusto (ej: 18px, 20px, etc.) */
+  font-weight: bold;     /* Opcional: hace que resalte más */
+}
 /* ================================================================
    WRAPPER DE TABLA — Scroll horizontal en móvil
    ================================================================ */

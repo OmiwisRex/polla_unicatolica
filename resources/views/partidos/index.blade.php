@@ -6,7 +6,7 @@
 <div class="container">
     <div class="page-title">Partidos</div>
 
-    <div class="controls controlmax">
+    <div class="control controlmax">
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.index') }}">

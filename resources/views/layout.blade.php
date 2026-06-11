@@ -11,11 +11,11 @@
     <header>
         <div class="header-content">
             <div>
-                <img src="{{ asset('img/horizontal colorAmarillo.png') }}" alt="Logo Institución" class="navbar-logo">
+                <img src="{{ asset('img/horizontal_fullcolor.png') }}" alt="Logo Institución" class="navbar-logo">
                 <div class="logo-subtitle">Reto Mundialista 2026 + Trivia Institucional</div>
             </div>
 
-            <div class="controls">
+            <div class=".controls_header">
                 <a href="{{ route('index') }}" class="btn btn-secondary">Clasificación</a>
                 <a href="{{ auth()->check() && auth()->user()->permiso_id === 2 ? route('partidos.jugador') : (auth()->check() && auth()->user()->permiso_id === 3 ? route('partidos.admin') : route('partidos.index')) }}" class="btn btn-secondary">Partidos</a>
                 @auth

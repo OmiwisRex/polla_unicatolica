@@ -47,6 +47,7 @@
 
     /* --- Bloque de NEGRO (Textos y elementos de contraste) --- */
     --negro: #000000;
+    --negro-medio:#0c0909;
 
     /* --- BLOQUE DE AMARILLOS (Alertas, estados o detalles) --- */
     --amarillo-oscuro: #b08f09;

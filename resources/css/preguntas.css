@@ -11,12 +11,9 @@
 /* ---- ESTILOS DEL BODY ---- */
 body {
   font-family: 'Myriad Pro', 'Times New Roman', Times, serif;
-
   /* ANTES: background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%); */
-
   /* NUEVO: imagen de fondo responsiva */
   background-image: 
-    linear-gradient(135deg, rgba(24, 37, 48, 0.82) 0%, rgba(15, 61, 83, 0.78) 100%),
     url('/img/fondomundial.png');        /* ← ruta desde public/ en Laravel */
   background-size: cover;               /* cubre toda la pantalla sin deformar */
   background-position: center center;   /* centrada horizontal y vertical */
@@ -31,11 +28,11 @@ body {
    HEADER — Barra superior de navegación
    ================================================================ */
 header {
-  background: linear-gradient(135deg, var(--blanco) 0%);
+  background: linear-gradient(135deg, var(--) 0%);
   /* Degradado inverso al body para que el header contraste visualmente */
-  border-bottom: 3px solid var(--azul-claro); /* Línea azul inferior que separa el header del contenido */
+   /* Línea azul inferior que separa el header del contenido */
   padding: 25px 0;                                /* Espacio vertical interno arriba y abajo */
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.726);     /* Sombra suave hacia abajo para dar profundidad */
+      /* Sombra suave hacia abajo para dar profundidad */
 }
 
 /* Contenedor interno del header: centra y organiza logo + nav */
@@ -45,7 +42,7 @@ header {
   display: flex;              /* Layout flexible en fila */
   justify-content: space-between; /* Logo a la izquierda, nav en el centro, botones a la derecha */
   align-items: center;        /* Alinea verticalmente al centro */
-  padding: 0 20px;            /* Espacio horizontal interno */
+  padding: 0 10px;            /* Espacio horizontal interno */
   gap: 16px;                  /* Separación entre los bloques hijos */
   flex-wrap: wrap;            /* En pantallas pequeñas los elementos bajan a una nueva línea */
 }
@@ -95,6 +92,29 @@ header {
    Panel superior con botones de acción y filtros
    ================================================================ */
 .controls {
+  display: flex;              /* Elementos en fila */
+  gap: 15px;                  /* Separación entre botones/controles */
+  margin-bottom: 25px;        /* Espacio debajo antes de la tabla */
+  align-items: center;        /* Alineación vertical centrada */
+  flex-wrap: wrap;            /* Permite salto de línea en pantallas pequeñas */
+  background: var(--azul-medio); /* Fondo semitransparente azul para distinguir el panel */
+  padding: 15px;              /* Relleno interno */
+  border-radius: 6px;         /* Bordes ligeramente redondeados */
+  border-left: 3px solid var(--azul-claro); /* Acento azul en el borde izquierdo */
+}
+
+.controls_header {
+  display: flex;              /* Elementos en fila */
+  gap: 15px;                  /* Separación entre botones/controles */
+  margin-bottom: 25px;        /* Espacio debajo antes de la tabla */
+  align-items: center;        /* Alineación vertical centrada */
+  flex-wrap: wrap;            /* Permite salto de línea en pantallas pequeñas */
+   /* Fondo semitransparente azul para distinguir el panel */
+  padding: 15px;              /* Relleno interno */
+  border-radius: 6px;         /* Bordes ligeramente redondeados */
+   /* Acento azul en el borde izquierdo */
+}
+.control {
   display: flex;              /* Elementos en fila */
   gap: 15px;                  /* Separación entre botones/controles */
   margin-bottom: 25px;        /* Espacio debajo antes de la tabla */
@@ -335,9 +355,9 @@ tbody tr:hover {
 
 /* Lista de errores de validación de formulario Laravel */
 .validation-errors {
-  background: rgba(170, 50, 50, 0.15); /* Fondo rojo igual que alert-danger */
-  color: #ffd6d6;                       /* Texto rosado */
-  border: 1px solid rgba(170, 50, 50, 0.4); /* Borde rojo semitransparente */
+  background: rgb(255, 67, 67); /* Fondo rojo igual que alert-danger */
+  color: #ffffff;                       /* Texto rosado */
+  border: 1px solid rgb(170, 50, 50); /* Borde rojo semitransparente */
   padding: 14px 18px;
   border-radius: 6px;
   margin-bottom: 20px;
