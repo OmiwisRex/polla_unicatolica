@@ -105,6 +105,14 @@ precondiciónes: tener una sesión de administrador abierta e iniciar las prueba
 11. jugador: recargar la página partidos para ver el conteo de puntos
 12. jugador: recargar la página clasificación para ver el conteo de puntos
 
+para hacer test de sumatoria de puntos, toca hacer las siguientes pruebas:
+
+1. contestar la pregunta bien = 2 pts pregunta
+2. acertar al equipo ganador sin acertar marcadores = 2 pts result
+3. acertar ambos marcadores sin acertar al equipo ganador = 2 pts result
+4. acertar al equipo ganador y a un marcador = 3 pts result
+5. acertar todo = 6 pts total para el partido
+
 ## Instalación
 
 para armar el proyecto luego de clonarlo del repositorio:
