@@ -2,6 +2,8 @@
 
 Frontend:
 
+- revisar paleta de colores y que todo se vea bien en responsive.
+- mejorar fondo que casi no se ve y header que está muy parco.
 - agregar información de administración y reestablecer contraseña en login.
 
 Backend:
