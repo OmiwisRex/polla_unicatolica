@@ -14,7 +14,7 @@ export default defineConfig({
         host: '0.0.0.0',
         port: 5173,
         hmr: {
-            host: '172.16.22.72', // poner la IP local para trabajo en LAN con otro PC usando npm run dev
+            host: '127.0.0.1', // poner la IP local para trabajo en LAN con otro PC usando npm run dev
         },
     },
 });

@@ -88,6 +88,23 @@ todas las vistas incluyen un header, con el título de la página a la izquierda
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+## Pruebas
+
+precondiciónes: tener una sesión de administrador abierta e iniciar las pruebas en otra ventana, recomendable en incógnito, estando sin login. también es idónde tener al menos otro jugador creado y verificado para verlo en la tabla de clasificación
+
+1. jugador: sin login ver las clasificaciónes
+2. jugador: sin login ver los partidos y cambiar de etapa
+3. jugador: hacer un registro de usuario visualizando la página de pago pendiente
+4. admin: ir a jugadores y activar al jugador registrado
+5. admin: ir a preguntas, crear una nueva, luego editarla y luego eliminarla
+6. admin: ver partidos, editar uno colocando una fecha futura y sin goles
+7. jugador: aunque ir a partidos sirve, cerrar sesión para probar el login, logearse
+8. jugador: ver partidos y hacer predicción del que lo permite
+9. admin: editar el mismo partido que contestó el jugador, colocando una fecha pasada y sin goles
+10. admin: usar el botón de marcador para colocar los goles
+11. jugador: recargar la página partidos para ver el conteo de puntos
+12. jugador: recargar la página clasificación para ver el conteo de puntos
+
 ## Instalación
 
 para armar el proyecto luego de clonarlo del repositorio:
