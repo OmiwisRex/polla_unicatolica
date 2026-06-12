@@ -17,6 +17,7 @@
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.jugador') }}">
+                <option value="pendientes_prediccion" {{ $selectedEtapaId === 'pendientes_prediccion' ? 'selected' : '' }}>Pendientes por predecir</option>
                 @foreach($etapas as $etapa)
                     <option value="{{ $etapa->id }}" {{ $selectedEtapaId == $etapa->id ? 'selected' : '' }}>{{ $etapa->nombre }}</option>
                 @endforeach
@@ -44,7 +45,7 @@
             @forelse($partidos as $partido)
                 @php
                     $apuesta = $apuestas[$partido->id] ?? null;
-                    $puedeApostar = $partido->equipo_a_id && $partido->equipo_b_id && $partido->fecha_hora && $partido->fecha_hora->isFuture() && !$apuesta && $partido->goles_a === null && $partido->goles_b === null;
+                    $puedeApostar = $partido->equipo_a_id && $partido->equipo_b_id && $partido->fecha_hora && $partido->fecha_hora->isFuture() && $partido->goles_a === null && $partido->goles_b === null;
                 @endphp
                 <tr>
                     <td data-label="Etapa">{{ $partido->etapa?->nombre ?? 'Sin etapa' }}</td>
@@ -96,16 +97,12 @@
                                 }
                             @endphp
                             <span class="score-pill">{{ $apuesta->goles_a }} - {{ $apuesta->goles_b }}{{ $ganadorApuesta }}</span>
-                        @elseif($apuesta)
-                            <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal('{{ $partido->id }}')">
-                                Predecir
-                            </button>
                         @elseif($puedeApostar)
                             <button type="button" class="btn btn-secondary btn-small" onclick="prepareApuestaModal('{{ $partido->id }}')">
                                 Predecir
                             </button>
                         @elseif($partido->fecha_hora && $partido->fecha_hora->isPast())
-                            <span class="status">Vencida</span>
+                            <span class="status">💥 Vencida</span>
                         @else
                             <span class="status">Esperando</span>
                         @endif

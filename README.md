@@ -147,8 +147,3 @@ para activar el servidor local y auto carga de recursos:
 1. php artisan serve
 2. (en vite.config.js hmr-host será 127.0.0.1 o la propia IP LAN si se quiere conexión remota Live Share para usar bien el run dev)
 3. npm run dev
-
-Nota, agregar atributos a apuestas en la DB:
-
-ALTER TABLE apuestas ADD COLUMN respuesta_str VARCHAR(1024) NOT NULL DEFAULT '';
-ALTER TABLE apuestas ADD COLUMN respuesta TINYINT NULL DEFAULT NULL;

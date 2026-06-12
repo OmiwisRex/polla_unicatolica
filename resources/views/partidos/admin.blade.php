@@ -14,6 +14,7 @@
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.admin') }}">
+                <option value="pendientes_marcador" {{ $selectedEtapaId === 'pendientes_marcador' ? 'selected' : '' }}>Pendientes por marcador</option>
                 @foreach($etapas as $etapa)
                     <option value="{{ $etapa->id }}" {{ $selectedEtapaId == $etapa->id ? 'selected' : '' }}>{{ $etapa->nombre }}</option>
                 @endforeach
