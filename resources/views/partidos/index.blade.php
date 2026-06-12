@@ -10,6 +10,7 @@
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.index') }}">
+                <option value="hoy" {{ $selectedEtapaId === 'hoy' ? 'selected' : '' }}>Hoy</option>
                 @foreach($etapas as $etapa)
                     <option value="{{ $etapa->id }}" {{ $selectedEtapaId == $etapa->id ? 'selected' : '' }}>{{ $etapa->nombre }}</option>
                 @endforeach

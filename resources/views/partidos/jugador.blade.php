@@ -17,6 +17,7 @@
         <div>
             <label for="filtro-etapa">Filtrar por etapa:</label>
             <select id="filtro-etapa" data-route="{{ route('partidos.jugador') }}">
+                <option value="hoy" {{ $selectedEtapaId === 'hoy' ? 'selected' : '' }}>Hoy</option>
                 <option value="pendientes_prediccion" {{ $selectedEtapaId === 'pendientes_prediccion' ? 'selected' : '' }}>Pendientes por predecir</option>
                 @foreach($etapas as $etapa)
                     <option value="{{ $etapa->id }}" {{ $selectedEtapaId == $etapa->id ? 'selected' : '' }}>{{ $etapa->nombre }}</option>

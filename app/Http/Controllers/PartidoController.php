@@ -20,15 +20,21 @@ class PartidoController extends Controller
         $todasLasEtapas = Etapa::orderBy('id')->get();
         $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
         
-        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas);
+        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas, ['hoy']);
         
         // Si selecciona "finales", filtrar por las etapas finales
         $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
 
-        $partidos = Partido::with(['etapa', 'equipoA', 'equipoB'])
-            ->when($etapasParaFiltro, fn ($query) => $query->whereIn('etapa_id', $etapasParaFiltro))
-            ->orderByDesc('fecha_hora')
-            ->get();
+        $partidosQuery = Partido::with(['etapa', 'equipoA', 'equipoB']);
+
+        if ($selectedEtapaId === 'hoy') {
+            $partidosQuery->whereNotNull('fecha_hora')
+                ->whereDate('fecha_hora', Carbon::today(config('app.timezone')));
+        } else {
+            $partidosQuery->when($etapasParaFiltro, fn ($query) => $query->whereIn('etapa_id', $etapasParaFiltro));
+        }
+
+        $partidos = $partidosQuery->orderByDesc('fecha_hora')->get();
 
         // Avance respecto a TODOS los partidos en la BD
         $totalPartidos = Partido::count();
@@ -70,7 +76,7 @@ class PartidoController extends Controller
 
     private function obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas)
     {
-        if (in_array((string) $selectedEtapaId, ['pendientes_marcador', 'pendientes_prediccion'], true)) {
+        if (in_array((string) $selectedEtapaId, ['pendientes_marcador', 'pendientes_prediccion', 'hoy'], true)) {
             return null;
         }
 
@@ -120,7 +126,7 @@ class PartidoController extends Controller
         $todasLasEtapas = Etapa::orderBy('id')->get();
         $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
         
-        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas, ['pendientes_prediccion']);
+        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas, ['pendientes_prediccion', 'hoy']);
         
         // Si selecciona "finales", filtrar por las etapas finales
         $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
@@ -141,6 +147,9 @@ class PartidoController extends Controller
                             ->whereNotIn('id', Apuesta::where('usuario_id', $usuario->id)->pluck('partido_id'));
                     });
             });
+        } elseif ($selectedEtapaId === 'hoy') {
+            $partidosQuery->whereNotNull('fecha_hora')
+                ->whereDate('fecha_hora', Carbon::today(config('app.timezone')));
         } else {
             $partidosQuery->when($etapasParaFiltro, fn ($query) => $query->whereIn('etapa_id', $etapasParaFiltro));
         }
@@ -174,7 +183,7 @@ class PartidoController extends Controller
         $todasLasEtapas = Etapa::orderBy('id')->get();
         $etapas = $this->agruparEtapasConFinales($todasLasEtapas);
         
-        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas, ['pendientes_marcador']);
+        $selectedEtapaId = $this->obtenerSelectedEtapaId($request, $etapas, ['pendientes_marcador', 'hoy']);
         
         // Si selecciona "finales", filtrar por las etapas finales
         $etapasParaFiltro = $this->obtenerEtapasDelFiltro($selectedEtapaId, $todasLasEtapas);
@@ -189,6 +198,9 @@ class PartidoController extends Controller
                 ->where(function ($query) {
                     $query->whereNull('goles_a')->orWhereNull('goles_b');
                 });
+        } elseif ($selectedEtapaId === 'hoy') {
+            $partidosQuery->whereNotNull('fecha_hora')
+                ->whereDate('fecha_hora', Carbon::today(config('app.timezone')));
         } else {
             $partidosQuery->when($etapasParaFiltro, fn ($query) => $query->whereIn('etapa_id', $etapasParaFiltro));
         }

@@ -141,6 +141,7 @@ consideraciónes:
 - APP_URL=http://localhost y ASSET_URL comentado para funcionamiento local
 - la línea "base:..." de vite.config.js se puede comentar para funcionamiento local
 - las configuraciónes APP_URL, ASSET_URL, base:... tienen texto para despliegue referente a la url del servidor (ver link)
+- al subir al servidor, copiar la carpeta public/build/assets/ a public/assets/
 
 para activar el servidor local y auto carga de recursos:
 
