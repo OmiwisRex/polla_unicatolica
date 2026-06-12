@@ -12,9 +12,6 @@
 body {
   font-family: 'Myriad Pro', 'Times New Roman', Times, serif;
   /* ANTES: background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-medio) 100%); */
-  /* NUEVO: imagen de fondo responsiva */
-  background-image: 
-    url('/img/fondomundial.png');        /* ← ruta desde public/ en Laravel */
   background-size: cover;               /* cubre toda la pantalla sin deformar */
   background-position: center center;   /* centrada horizontal y vertical */
   background-attachment: fixed;         /* el fondo no hace scroll con el contenido */

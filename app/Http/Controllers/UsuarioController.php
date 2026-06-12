@@ -38,7 +38,15 @@ class UsuarioController extends Controller
                 ->first();
         }
 
-        return view('usuarios.search', compact('usuario', 'cedula'));
+        $jugadoresActivos = Usuario::where('permiso_id', 2)
+            ->orderBy('nombre')
+            ->get();
+
+        $jugadoresInactivos = Usuario::where('permiso_id', 1)
+            ->orderBy('nombre')
+            ->get();
+
+        return view('usuarios.search', compact('usuario', 'cedula', 'jugadoresActivos', 'jugadoresInactivos'));
     }
 
     public function edit(Usuario $usuario)
@@ -54,7 +62,7 @@ class UsuarioController extends Controller
 
         $rules = [
             'nombre' => 'required|string|max:255',
-            'clave' => 'nullable|string|min:6|confirmed',
+            'restablecer_clave' => 'required|in:si,no',
         ];
 
         if ($usuario->permiso_id !== 3) {
@@ -62,7 +70,7 @@ class UsuarioController extends Controller
         }
 
         $data = $request->validate($rules, [
-            'clave.confirmed' => 'La confirmación de la clave no coincide.',
+            'restablecer_clave.in' => 'La opción de restablecer la contraseña no es válida.',
         ]);
 
         $usuario->nombre = $data['nombre'];
@@ -71,8 +79,9 @@ class UsuarioController extends Controller
             $usuario->permiso_id = $data['permiso_id'];
         }
 
-        if (!empty($data['clave'])) {
-            $usuario->clave = Hash::make($data['clave']);
+        if ($data['restablecer_clave'] === 'si') {
+            $defaultPassword = env('DEFAULT_PASSWORD', 'password');
+            $usuario->clave = Hash::make($defaultPassword);
         }
 
         $usuario->save();

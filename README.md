@@ -105,6 +105,9 @@ precondiciónes: tener una sesión de administrador abierta e iniciar las prueba
 10. admin: usar el botón de marcador para colocar los goles
 11. jugador: recargar la página partidos para ver el conteo de puntos
 12. jugador: recargar la página clasificación para ver el conteo de puntos
+13. admin: ir a jugadores y buscar al actual, luego editarlo y darle a reestablecer contraseña.
+14. jugador: hacer logout y luego login con contraseña nueva.
+15. jugador: hacer logout y luego login con contraseña vieja (falla) y luego nueva.
 
 para hacer test de sumatoria de puntos, toca hacer las siguientes pruebas:
 

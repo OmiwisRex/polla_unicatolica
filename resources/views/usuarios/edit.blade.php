@@ -43,14 +43,12 @@
             @endif
 
             <div class="group-form">
-                <label for="clave">Nueva clave</label>
-                <input id="clave" name="clave" type="password">
-                <small>Dejar en blanco para mantener la clave actual.</small>
-            </div>
-
-            <div class="group-form">
-                <label for="clave_confirmation">Confirmar clave</label>
-                <input id="clave_confirmation" name="clave_confirmation" type="password">
+                <label for="restablecer_clave">Restablecer contraseña</label>
+                <select id="restablecer_clave" name="restablecer_clave">
+                    <option value="no" >No</option>
+                    <option value="si" >Si</option>
+                </select>
+                <small>Si selecciona Sí, la próxima vez que el jugador haga login podrá entrar con una nueva contraseña que quedará guardada como su actual contraseña.</small>
             </div>
 
             <div class="actions">

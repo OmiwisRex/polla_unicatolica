@@ -24,22 +24,42 @@ class AuthController extends Controller
             'clave'  => 'required|string',
         ]);
 
-        // 2. Intentamos henticar de forma manual con Auth::attempt()
-        // Mapeamos 'password' internamente a tu columna 'clave' gracias al modelo
+        $defaultPassword = env('DEFAULT_PASSWORD', 'password');
+
+        // 2. Intentamos autenticar con la clave ingresada
         if (Auth::attempt(['cedula' => $credentials['cedula'], 'password' => $credentials['clave']])) {
-            
             $request->session()->regenerate(); // Seguridad contra fijación de sesiones
+            /** @var \App\Models\User $usuarioLogueado */
             $usuarioLogueado = Auth::user();
 
-            // Redirección Contextual basada en las reglas de tu README:
+            if (Hash::check($defaultPassword, $usuarioLogueado->clave)) {
+                $usuarioLogueado->clave = Hash::make($credentials['clave']);
+                $usuarioLogueado->save();
+            }
+
             if ($usuarioLogueado->permiso_id == 3) {
-                // Administrador -> Va a partidos admin
                 return redirect()->route('partidos.admin');
             } elseif ($usuarioLogueado->permiso_id == 2) {
-                // Jugador con acceso -> Va a partidos jugador
                 return redirect()->route('partidos.jugador');
             } else {
-                // Permiso Ninguno (1) -> No ha pagado, va a la vista de cobrar
+                return redirect()->route('pagar');
+            }
+        }
+
+        // 3. Si la contraseña almacenada es la contraseña por defecto, permitimos el ingreso y actualizamos la clave
+        $usuario = Usuario::where('cedula', $credentials['cedula'])->first();
+
+        if ($usuario && Hash::check($defaultPassword, $usuario->clave)) {
+            Auth::login($usuario);
+            $usuario->clave = Hash::make($credentials['clave']);
+            $usuario->save();
+            $request->session()->regenerate();
+
+            if ($usuario->permiso_id == 3) {
+                return redirect()->route('partidos.admin');
+            } elseif ($usuario->permiso_id == 2) {
+                return redirect()->route('partidos.jugador');
+            } else {
                 return redirect()->route('pagar');
             }
         }

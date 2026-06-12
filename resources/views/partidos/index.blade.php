@@ -80,9 +80,6 @@
     </table>
 </div>
 
-<script>
-    document.getElementById('filtro-etapa').addEventListener('change', function () {
-        window.location.href = this.dataset.route + '?etapa=' + this.value;
-    });
-</script>
+@vite('resources/js/partidos/index.js')
+
 @endsection

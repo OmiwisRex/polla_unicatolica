@@ -63,5 +63,55 @@
             </div>
         @endif
     @endif
+
+    <div class="usuarios-table-panel">
+        <div class="usuarios-table-section">
+            <h3 class="table-section-title">Jugadores activos</h3>
+            <table class="usuarios-table">
+                <thead>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($jugadoresActivos as $usuarioActivo)
+                        <tr>
+                            <td>{{ $usuarioActivo->cedula }}</td>
+                            <td>{{ $usuarioActivo->nombre }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="2">No hay jugadores activos registrados.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div class="usuarios-table-section inactive-users">
+            <h3 class="table-section-title">Jugadores sin permiso</h3>
+            <table class="usuarios-table">
+                <thead>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($jugadoresInactivos as $usuarioInactivo)
+                        <tr>
+                            <td>{{ $usuarioInactivo->cedula }}</td>
+                            <td>{{ $usuarioInactivo->nombre }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="2">No hay usuarios sin permiso registrados.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 @endsection

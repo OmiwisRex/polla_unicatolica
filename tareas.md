@@ -2,17 +2,22 @@
 
 Frontend:
 
-- agregar información general, acerca de del sistema, guia de reglas, en un desplegable para todos los usuarios.
-- verificar que cargue en el servidor el fondo y el icono.
+- nada
 
 Backend:
 
-- debajo de buscar jugador debe aparecer el listado de cédulas y nombres, jugadores activos y luego inactivos.
+2. en views/partidos/admin agregar un filtro al selector de filtro-etapa, este mostrará los registros que están pendientes por poner marcador, ver la condición:
+@elseif($partido->equipo_a_id && $partido->equipo_b_id && $partido->fecha_hora && $partido->fecha_hora->isPast())
+en la columna Resultado, la cuál agrega un botón.
 
-- agregar en filtros, un filtro de adivinaciónes pendientes o en admin sería marcador por poner.
-- agregar en filtros, un filtro de partidos de hoy.
+3. en views/partidos/jugador agregar un filtro al selector de filtro-etapa,este mostrará los registros que están pendientes por predecir, ver la condición:
+@elseif($apuesta || $puedeApostar)
+en la columna Predicciónes, la cuál agrega un botón.
 
-- el administrador no coloca contraseña nueva, solo da ok a reestablecer, se pone una por defecto, el login si detecta que está por defecto entonces guarda la nueva ingresada.
-- escribir instrucciónes de reestablecimiento de contraseña en editor de usuario del admin.
+4. agregar a todos los filtros de views/partidos/ (3 views), al selector filtro-etapa, una opción que diga "Hoy", y muestre los registros solo de los partidos que tienen el atributo fecha_hora en la tabla partidos, seteado y que coincida en datetime con el día de hoy.
 
-- al enviar la respuesta a la pregunta, verificar que se envía el texto que aparece en el frontend y no el texto tomado a partir del id que se pasa al contestar, pues esto último es información redundante, si hay un fallo eligiendo el id correcto, mostrará la pregunta de ese id y no la que leyó y eligió el usuario.
+6. al enviar la respuesta a la pregunta, verificar que se envía el texto que aparece en el frontend y no el texto tomado a partir del id que se pasa al contestar, pues esto último es información redundante, si hay un fallo eligiendo el id correcto, mostrará la pregunta de ese id y no la que leyó y eligió el usuario.
+
+Notas:
+
+- todos los estilso deben ir en los correspondientes archivos css y los colores deben respetar la paleta de color en css/app.css

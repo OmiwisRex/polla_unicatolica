@@ -191,58 +191,7 @@
     </div>
 </div>
 
-<script>
-    document.getElementById('filtro-etapa').addEventListener('change', function () {
-        window.location.href = this.dataset.route + '?etapa=' + this.value;
-    });
-
-    const partidosBaseUrl = "{{ url('/partidos') }}";
-
-    function openPartidoModal(partido) {
-        const form = document.getElementById('partido-edit-form');
-        form.action = partidosBaseUrl + '/' + partido.id;
-        document.getElementById('equipo_a_id').value = partido.equipo_a_id || '';
-        document.getElementById('equipo_b_id').value = partido.equipo_b_id || '';
-        document.getElementById('fecha_hora').value = partido.fecha_hora || '';
-        document.getElementById('goles_a').value = partido.goles_a ?? '';
-        document.getElementById('goles_b').value = partido.goles_b ?? '';
-        document.getElementById('edit_goles_a_label').textContent = 'Goles ' + (partido.equipo_a_nombre || 'Equipo A');
-        document.getElementById('edit_goles_b_label').textContent = 'Goles ' + (partido.equipo_b_nombre || 'Equipo B');
-
-        const esFaseGrupos = partido.etapa_nombre && partido.etapa_nombre.toLowerCase().includes('grupo');
-        document.getElementById('equipo_a_id').disabled = esFaseGrupos;
-        document.getElementById('equipo_b_id').disabled = esFaseGrupos;
-
-        document.getElementById('partido-modal').hidden = false;
-    }
-
-    function closePartidoModal() {
-        document.getElementById('partido-modal').hidden = true;
-    }
-
-    function openResultadoModal(partido) {
-        const form = document.getElementById('resultado-edit-form');
-        form.action = partidosBaseUrl + '/' + partido.id;
-        document.getElementById('resultado_goles_a').value = partido.goles_a ?? '';
-        document.getElementById('resultado_goles_b').value = partido.goles_b ?? '';
-        document.querySelector('label[for="resultado_goles_a"]').textContent = 'Goles ' + (partido.equipo_a || 'Equipo A');
-        document.querySelector('label[for="resultado_goles_b"]').textContent = 'Goles ' + (partido.equipo_b || 'Equipo B');
-        document.getElementById('resultado-modal').hidden = false;
-    }
-
-    document.getElementById('equipo_a_id').addEventListener('change', function () {
-        const selectedText = this.options[this.selectedIndex]?.text || 'Equipo A';
-        document.getElementById('edit_goles_a_label').textContent = 'Goles ' + selectedText;
-    });
-
-    document.getElementById('equipo_b_id').addEventListener('change', function () {
-        const selectedText = this.options[this.selectedIndex]?.text || 'Equipo B';
-        document.getElementById('edit_goles_b_label').textContent = 'Goles ' + selectedText;
-    });
-
-    function closeResultadoModal() {
-        document.getElementById('resultado-modal').hidden = true;
-    }
-</script>
+@vite('resources/js/partidos/index.js')
+@vite('resources/js/partidos/admin.js')
 
 @endsection
