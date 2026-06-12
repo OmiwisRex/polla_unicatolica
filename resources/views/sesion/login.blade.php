@@ -35,6 +35,8 @@
                 <button type="submit" class="btn btn-primary">Ingresar</button>
             </div>
         </form>
+        <br>
+        <p>Si olvidó la contraseña, diríjase con el administrador Ezequiel, oficina C200 del edificio de bienestar institucional.</p>
     </div>
 </div>
 @endsection
