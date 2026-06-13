@@ -39,10 +39,12 @@ window.prepareApuestaModal = async function(partidoId) {
         const preguntaBox = document.getElementById('pregunta-box');
         const preguntaEnunciado = document.getElementById('pregunta-enunciado');
         const preguntaOpciones = document.getElementById('pregunta-opciones');
+        const respuestaStrInput = document.getElementById('respuesta_str');
 
         preguntaBox.hidden = false;
         preguntaEnunciado.textContent = data.pregunta.enunciado;
         preguntaOpciones.innerHTML = '';
+        respuestaStrInput.value = '';
 
         const respuestas = data.pregunta.opciones.slice();
 
@@ -58,6 +60,12 @@ window.prepareApuestaModal = async function(partidoId) {
                     ${escapeHtml(respuesta.texto)}
                 </label>
             `;
+            const radioInput = wrapper.querySelector('input[type="radio"]');
+            if (radioInput) {
+                radioInput.addEventListener('change', () => {
+                    respuestaStrInput.value = respuesta.texto;
+                });
+            }
             preguntaOpciones.appendChild(wrapper);
         });
 
@@ -90,3 +98,22 @@ window.closeApuestaModal = function() {
         modal.hidden = true;
     }
 };
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('apuesta-form');
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener('submit', function () {
+        const respuestaStrInput = document.getElementById('respuesta_str');
+        const selectedRadio = document.querySelector('#pregunta-opciones input[name="respuesta"]:checked');
+
+        if (selectedRadio && respuestaStrInput) {
+            const label = selectedRadio.closest('label');
+            if (label) {
+                respuestaStrInput.value = label.textContent.trim();
+            }
+        }
+    });
+});

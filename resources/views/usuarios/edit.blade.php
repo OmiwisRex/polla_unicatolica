@@ -17,17 +17,17 @@
         </div>
     @endif
 
-    <div class="form-card">
-        <form action="{{ route('usuarios.update', $usuario) }}" method="POST">
-            @csrf
-            @method('PUT')
+    @if($usuario->permiso_id !== 3)
+        <div class="form-card">
+            <form action="{{ route('usuarios.update', $usuario) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-            <div class="group-form">
-                <label for="nombre">Nombre completo</label>
-                <input id="nombre" name="nombre" type="text" value="{{ old('nombre', $usuario->nombre) }}" required>
-            </div>
+                <div class="group-form">
+                    <label for="nombre">Nombre completo</label>
+                    <input id="nombre" name="nombre" type="text" value="{{ old('nombre', $usuario->nombre) }}" required>
+                </div>
 
-            @if($usuario->permiso_id !== 3)
                 <div class="group-form">
                     <label for="permiso_id">Permiso</label>
                     <select id="permiso_id" name="permiso_id" required>
@@ -35,27 +35,40 @@
                         <option value="2" {{ old('permiso_id', $usuario->permiso_id) == 2 ? 'selected' : '' }}>Jugar</option>
                     </select>
                 </div>
-            @else
+
                 <div class="group-form">
-                    <label>Permiso</label>
-                    <div>Administrar</div>
+                    <label for="restablecer_clave">Restablecer contraseña</label>
+                    <select id="restablecer_clave" name="restablecer_clave">
+                        <option value="no" >No</option>
+                        <option value="si" >Si</option>
+                    </select>
+                    <small>Si selecciona Sí, la próxima vez que el jugador haga login podrá entrar con una nueva contraseña que quedará guardada como su actual contraseña.</small>
                 </div>
-            @endif
+
+                <div class="actions">
+                    <a href="{{ route('usuarios.search', ['cedula' => $usuario->cedula]) }}" class="btn btn-secondary">Volver</a>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    @else
+        <div class="form-card">
+            <div class="group-form">
+                <label for="nombre">Nombre completo</label>
+                <div>{{ old('nombre', $usuario->nombre) }}</div>
+            </div>
 
             <div class="group-form">
-                <label for="restablecer_clave">Restablecer contraseña</label>
-                <select id="restablecer_clave" name="restablecer_clave">
-                    <option value="no" >No</option>
-                    <option value="si" >Si</option>
-                </select>
-                <small>Si selecciona Sí, la próxima vez que el jugador haga login podrá entrar con una nueva contraseña que quedará guardada como su actual contraseña.</small>
+                <label>Permiso</label>
+                <div>Administrar</div>
             </div>
+
+            <small>Deshabilitada la edición, solo el webmaster puede cambiar a un administrador.</small>
 
             <div class="actions">
                 <a href="{{ route('usuarios.search', ['cedula' => $usuario->cedula]) }}" class="btn btn-secondary">Volver</a>
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
             </div>
-        </form>
-    </div>
+        </div>
+    @endif
 </div>
 @endsection

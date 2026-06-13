@@ -109,7 +109,7 @@
                         @endif
                     </td>
                     <td data-label="Puntos">
-                        @if($apuesta)
+                        @if($apuesta && $apuesta->goles_a !== null && $apuesta->goles_b !== null)
                             @php
                                 $apuestaPts = $apuesta->pts_apuesta ?? 0;
                                 $preguntaPts = $apuesta->pts_pregunta ?? 0;
@@ -137,6 +137,7 @@
             @csrf
 
             <input id="apuesta_id" name="apuesta_id" type="hidden">
+            <input id="respuesta_str" name="respuesta_str" type="hidden">
 
             <div class="group-form">
                 <label for="ganador">Resultado</label>

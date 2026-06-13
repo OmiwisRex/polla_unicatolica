@@ -7,9 +7,7 @@
     <div class="page-title">Buscar Jugador</div>
 
     @if(session('success'))
-        <div class="success-message">
-            {{ session('success') }}
-        </div>
+        <div class="alert-success">{{ session('success') }}</div>
     @endif
 
     @if($errors->any())

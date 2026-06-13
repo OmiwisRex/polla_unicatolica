@@ -129,19 +129,23 @@ para armar el proyecto luego de clonarlo del repositorio:
 6. php artisan migrate:fresh --seed
 7. npm install
 8. npm install flag-icons
-9. (configurar "base:..." en vite.config.js)
-10. npm run build
-11. php artisan config:clear
-12. php artisan route:clear
-13. php artisan view:clear
-14. php artisan cache:clear
+9. (configurar línea "base: etc" en vite.config.js)
+10. php artisan config:clear
+11. php artisan route:clear
+12. php artisan view:clear
+13. php artisan cache:clear
+14. npm run build
+
+una vez subido al servidor:
+
+15. copiar la carpeta public/build/assets/ a public/assets/
 
 consideraciónes:
 
+- para subir al servidor de unicatolica, ya están configurados el punto 5 y 9
 - APP_URL=http://localhost y ASSET_URL comentado para funcionamiento local
-- la línea "base:..." de vite.config.js se puede comentar para funcionamiento local
-- las configuraciónes APP_URL, ASSET_URL, base:... tienen texto para despliegue referente a la url del servidor (ver link)
-- al subir al servidor, copiar la carpeta public/build/assets/ a public/assets/
+- la línea "base: etc" de vite.config.js se puede comentar para funcionamiento local
+- las configuraciónes APP_URL, ASSET_URL, "base: etc" tienen texto para despliegue referente a la url del servidor (ver link del servidor)
 
 para activar el servidor local y auto carga de recursos:
 

@@ -340,14 +340,14 @@ tbody tr:hover {
 }
 
 .alert-success {
-  background: rgba(247, 194, 33, 0.15); /* Fondo amarillo muy suave */
-  color: #f9f1d1;                        /* Texto crema cálido legible sobre el fondo */
+  background: rgb(255, 255, 150); /* Fondo amarillo muy suave */
+  color: var(--negro-medio); /* Texto crema cálido legible sobre el fondo */
 }
 
 /* Alerta de error (ej: "No se pudo eliminar la pregunta") */
 .alert-danger {
-  background: rgba(170, 50, 50, 0.15); /* Fondo rojo muy suave */
-  color: #ffd6d6;                       /* Texto rosado suave sobre fondo rojo */
+  background: rgb(255, 150, 150); /* Fondo rojo muy suave */
+  color: var(--negro-medio); /* Texto rosado suave sobre fondo rojo */
 }
 
 /* Lista de errores de validación de formulario Laravel */

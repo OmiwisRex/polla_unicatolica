@@ -300,6 +300,7 @@ class PartidoController extends Controller
             'goles_b' => 'required|integer|min:0|max:30',
             'ganador' => 'required|in:0,1,2',
             'respuesta' => 'required|integer|in:0,1,2,3',
+            'respuesta_str' => 'required|string|max:1024',
         ]);
 
         $apuesta = $this->buscarApuestaPendiente($usuario, $partido);
@@ -314,15 +315,8 @@ class PartidoController extends Controller
 
         $apuesta->load('pregunta');
 
-        $opcionesOriginales = [
-            0 => $apuesta->pregunta->correcta,
-            1 => $apuesta->pregunta->falsa1,
-            2 => $apuesta->pregunta->falsa2,
-            3 => $apuesta->pregunta->falsa3,
-        ];
-
         $indiceSeleccionado = (int) $request->respuesta;
-        $respuesta_str = $opcionesOriginales[$indiceSeleccionado] ?? '';
+        $respuesta_str = trim((string) $request->respuesta_str);
         $ptsPregunta = $respuesta_str === $apuesta->pregunta->correcta ? 2 : 0;
 
         $apuesta->update([
@@ -331,7 +325,7 @@ class PartidoController extends Controller
             'ganador' => (int) $request->ganador,
             'pts_pregunta' => $ptsPregunta,
             'respuesta_str' => $respuesta_str,
-            'respuesta' => $indiceSeleccionado
+            'respuesta' => $indiceSeleccionado,
         ]);
 
         $this->actualizarPuntosPreguntasUsuario($usuario);

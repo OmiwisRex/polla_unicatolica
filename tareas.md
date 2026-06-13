@@ -6,7 +6,7 @@ Frontend:
 
 Backend:
 
-- al enviar la respuesta a la pregunta, verificar que se envía el texto que aparece en el frontend y no el texto tomado a partir del id que se pasa al contestar, pues esto último es información redundante, si hay un fallo eligiendo el id correcto, mostrará la pregunta de ese id y no la que leyó y eligió el usuario.
+- nada
 
 Notas:
 
