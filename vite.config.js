@@ -6,7 +6,14 @@ export default defineConfig({
     base: '/Reto_Mundialista/public/',
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+                'resources/js/partidos/admin.js',
+                'resources/js/partidos/index.js',
+                'resources/js/partidos/jugador.js',
+                'resources/js/utils.js'
+            ],
             refresh: true,
         }),
         tailwindcss(),
